@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.acms.models.Product;
@@ -30,6 +31,12 @@ public class ProductController {
 	@GetMapping("/product/getByName")
 	public Product getByName(){
 		return productService.getByName();
+	
+	}
+	
+	@PostMapping("/product/putAll")
+	public String putAll(){
+		return productService.putAll();
 	
 	}
 
