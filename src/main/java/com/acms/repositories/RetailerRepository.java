@@ -1,6 +1,8 @@
 package com.acms.repositories;
 
-public interface RetailerRepository {
+import org.springframework.data.repository.CrudRepository;
+
+public interface RetailerRepository extends CrudRepository{
 	
 	//public Retailer 
 

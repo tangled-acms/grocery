@@ -3,8 +3,8 @@ package com.acms.models;
 import org.springframework.data.annotation.Id;
 
 public class Retailer {
+	int serialNumber;
 	@Id
-	int slNo;
 	String retailerId;
 	String name;
 	String address1;
@@ -14,10 +14,10 @@ public class Retailer {
 	int contact2;
 	int contact3;
 	
-	public Retailer(int slNo, String retailerId, String name, String address1, String address2, String address3,
+	public Retailer(int serialNumber, String retailerId, String name, String address1, String address2, String address3,
 			int contact1, int contact2, int contact3) {
 		super();
-		this.slNo = slNo;
+		this.serialNumber= serialNumber;
 		this.retailerId = retailerId;
 		this.name = name;
 		this.address1 = address1;
@@ -28,12 +28,12 @@ public class Retailer {
 		this.contact3 = contact3;
 	}
 	
-	public int getSlNo() {
-		return slNo;
+	public int getSerialNumber() {
+		return serialNumber;
 	}
 
-	public void setSlNo(int slNo) {
-		this.slNo = slNo;
+	public void setSerialNumber(int slNo) {
+		this.serialNumber = slNo;
 	}
 
 	public String getRetailerId() {

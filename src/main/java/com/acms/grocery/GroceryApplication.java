@@ -11,8 +11,10 @@ import org.springframework.context.annotation.ComponentScan;
 public class GroceryApplication {
 
 	public static void main(String[] args) {
+		
 		SpringApplication.run(GroceryApplication.class, args);
 		//System.out.println("Hello");
+		
 	}
 
 }
