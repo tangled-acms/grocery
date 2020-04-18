@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 
 public class Product {
 	int serialNumber;
+	@Id
 	String productId;
 	Timestamp timeStamp;
 	String description;
