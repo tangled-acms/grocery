@@ -29,7 +29,7 @@ public class Product {
 		this.timeStamp = timeStamp;
 		this.description = description;
 		this.name = name;
-		MRP = mRP;
+		this.MRP = mRP;
 		this.quantity = quantity;
 		this.promotion = promotion;
 	}

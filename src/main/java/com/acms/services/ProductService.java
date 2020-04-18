@@ -42,7 +42,7 @@ public class ProductService {
 		Transaction tx= session.beginTransaction();
 		session.save(per);
 		tx.commit();
-		return null;
+		return productId;
 	}
 	
 }
