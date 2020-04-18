@@ -1,22 +1,25 @@
 package com.acms.models;
 
+import java.sql.Timestamp;
+
 import org.springframework.data.annotation.Id;
 
 public class Product {
 	int serialNumber;
-	@Id
 	String productId;
+	Timestamp timeStamp;
 	String description;
 	String name;
 	float MRP;
 	int quantity;
 	float promotion;
 	
-	public Product(int serialNumber, String productId, String description, String name, float mRP, int quantity,
-			float promotion) {
+	public Product(int serialNumber, String productId, Timestamp timeStamp, String description, String name, float mRP,
+			int quantity, float promotion) {
 		super();
 		this.serialNumber = serialNumber;
 		this.productId = productId;
+		this.timeStamp = timeStamp;
 		this.description = description;
 		this.name = name;
 		MRP = mRP;
@@ -38,6 +41,14 @@ public class Product {
 
 	public void setProductId(String productId) {
 		this.productId = productId;
+	}
+	
+	public Timestamp getTimeStamp() {
+		return timeStamp;
+	}
+
+	public void setTimeStamp(Timestamp timeStamp) {
+		this.timeStamp = timeStamp;
 	}
 
 	public String getDescription() {
