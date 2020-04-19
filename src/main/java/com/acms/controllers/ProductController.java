@@ -1,8 +1,6 @@
 package com.acms.controllers;
 
-import java.util.List;
 
-import javax.persistence.Id;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,8 +24,8 @@ public class ProductController {
 	}
 	
 	@GetMapping("/product/getById")
-	public Product getById(){
-		return productService.getById();
+	public Product getById(@RequestParam String productId){
+		return productService.getById(productId);
 	
 	}
 	

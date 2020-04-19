@@ -1,6 +1,6 @@
 package com.acms.models;
 
-import java.sql.Timestamp;
+
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -20,19 +20,6 @@ public class Product {
 	double MRP;
 	int quantity;
 	double promotion;
-	
-	public Product(int serialNumber, String productId, int timeStamp, String description, String name, double mRP,
-			int quantity, double promotion) {
-		super();
-		this.serialNumber = serialNumber;
-		this.productId = productId;
-		this.timeStamp = timeStamp;
-		this.description = description;
-		this.name = name;
-		this.MRP = mRP;
-		this.quantity = quantity;
-		this.promotion = promotion;
-	}
 	
 	public int getSerialNumber() {
 		return serialNumber;
@@ -96,5 +83,11 @@ public class Product {
 
 	public void setPromotion(double promotion) {
 		this.promotion = promotion;
+	}
+	@Override
+	public String toString() {
+		return "Product [serialNumber=" + serialNumber + ", productId=" + productId + ", timeStamp=" + timeStamp
+				+ ", description=" + description + ", name=" + name + ", MRP=" + MRP + ", quantity=" + quantity
+				+ ", promotion=" + promotion + "]";
 	}
 }
