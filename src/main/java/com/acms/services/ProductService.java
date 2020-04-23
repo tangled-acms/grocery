@@ -1,6 +1,9 @@
 package com.acms.services;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -8,7 +11,7 @@ import org.hibernate.cfg.Configuration;
 import org.springframework.stereotype.Service;
 
 import com.acms.models.Product;
-import com.acms.repositories.ProductRepository;
+
 
 @Service
 public class ProductService {
@@ -16,9 +19,20 @@ public class ProductService {
 	//ProductRepository productRepository;
 	
 
-public Iterable<Product> getAll(){
+public List<Product> getAll(){
             
-            return null;
+	 List<Product> products = new ArrayList<Product>();
+     
+     SessionFactory sf = new Configuration().configure().buildSessionFactory();
+     Session session = sf.openSession();
+     session.beginTransaction();
+     
+     products = (session.createQuery("from Product", Product.class)).list();
+     session.getTransaction().commit();
+     session.close();
+     
+     return products;
+	
 		
 	}
 	
@@ -37,9 +51,7 @@ public Iterable<Product> getAll(){
 	}
 	
 	public Product getByName(){
-		
 		return null;
-		
 	}
 	
 	public String postData(int serialNumber,String productId,int timeStamp,String description,String name,double MRP,int quantity,double promotion) {

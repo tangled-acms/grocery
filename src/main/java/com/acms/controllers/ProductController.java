@@ -2,6 +2,8 @@ package com.acms.controllers;
 
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +20,7 @@ public class ProductController {
 	ProductService productService;
 	
 	@GetMapping("/product/getAll")
-	public Iterable<Product> getAll(){
+	public List<Product> getAll(){ 
 		return productService.getAll();
 	
 	}
@@ -30,8 +32,8 @@ public class ProductController {
 	}
 	
 	@GetMapping("/product/getByName")
-	public Product getByName(){
-		return productService.getByName();
+	public Product getByName(@RequestParam String name){
+		return null;
 	
 	}
 	
