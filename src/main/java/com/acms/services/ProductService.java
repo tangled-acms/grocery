@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.acms.models.Product;
 import com.acms.repositories.ProductRepository;
@@ -43,23 +44,8 @@ public class ProductService {
 		return null;
 	}
 
-	public String postData(String productId, String description, String name, double MRP, int quantity,
-			double promotion) {
-		Product productObj = new Product();
-		productObj.setProductId(productId);
-		productObj.setDescription(description);
-		productObj.setName(name);
-		productObj.setMRP(MRP);
-		productObj.setQuantity(quantity);
-		productObj.setQuantity(quantity);
-		productObj.setPromotion(promotion);
-		Configuration con = new Configuration().configure().addAnnotatedClass(Product.class);
-		SessionFactory sf = con.buildSessionFactory();
-		Session session = sf.openSession();
-		Transaction tx = session.beginTransaction();
-		session.save(productObj);
-		tx.commit();
-		return productId;
+	public Product postData(Product product) {
+		return this.productRepository.save(product);
 	}
 
 }
