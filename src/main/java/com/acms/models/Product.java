@@ -11,23 +11,14 @@ import javax.persistence.Table;
 @Entity
 @Table(name="product")
 public class Product {
-	int serialNumber;
 	@Id
-	String productId;
-	int timeStamp;
-	String description;
-	String name;
-	double MRP;
-	int quantity;
-	double promotion;
-	
-	public int getSerialNumber() {
-		return serialNumber;
-	}
-
-	public void setSerialNumber(int serialNumber) {
-		this.serialNumber = serialNumber;
-	}
+	private String productId;
+	private int timeStamp;
+	private String description;
+	private String name;
+	private double MRP;
+	private int quantity;
+	private double promotion;
 
 	public String getProductId() {
 		return productId;
@@ -86,7 +77,7 @@ public class Product {
 	}
 	@Override
 	public String toString() {
-		return "Product [serialNumber=" + serialNumber + ", productId=" + productId + ", timeStamp=" + timeStamp
+		return "Product [productId=" + productId + ", timeStamp=" + timeStamp
 				+ ", description=" + description + ", name=" + name + ", MRP=" + MRP + ", quantity=" + quantity
 				+ ", promotion=" + promotion + "]";
 	}

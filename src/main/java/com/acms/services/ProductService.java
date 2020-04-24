@@ -8,15 +8,18 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.acms.models.Product;
+import com.acms.repositories.ProductRepository;
 
 
 @Service
 public class ProductService {
 	
-	//ProductRepository productRepository;
+	@Autowired
+	ProductRepository productRepository;
 	
 
 public List<Product> getAll(){
@@ -54,9 +57,8 @@ public List<Product> getAll(){
 		return null;
 	}
 	
-	public String postData(int serialNumber,String productId,int timeStamp,String description,String name,double MRP,int quantity,double promotion) {
+	public String postData(String productId,int timeStamp,String description,String name,double MRP,int quantity,double promotion) {
 		Product productObj= new Product();
-		productObj.setSerialNumber(serialNumber);
 		productObj.setProductId(productId);
 		productObj.setTimeStamp(timeStamp);
 		productObj.setDescription(description);

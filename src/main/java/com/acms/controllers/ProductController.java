@@ -38,8 +38,8 @@ public class ProductController {
 	}
 	
 	@PostMapping("/product/save")
-	public String postData(@RequestParam int serialNumber,@RequestParam String productId,@RequestParam int timeStamp,@RequestParam String description,@RequestParam String name,@RequestParam double MRP,@RequestParam int quantity,@RequestParam double promotion){
-		return productService.postData(serialNumber,productId,timeStamp,description,name,MRP,quantity,promotion);
+	public String postData(@RequestParam String productId,@RequestParam int timeStamp,@RequestParam String description,@RequestParam String name,@RequestParam double MRP,@RequestParam int quantity,@RequestParam double promotion){
+		return productService.postData(productId,timeStamp,description,name,MRP,quantity,promotion);
 	}
 
 }
