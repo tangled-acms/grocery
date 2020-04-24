@@ -1,11 +1,12 @@
 package com.acms.repositories;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.acms.models.Retailer;
 
-public interface RetailerRepository extends CrudRepository<Retailer,String>{
-	
-	//public Retailer 
+@Repository
+public interface RetailerRepository extends JpaRepository<Retailer,String>{
+ 
 
 }

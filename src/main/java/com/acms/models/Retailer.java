@@ -2,8 +2,12 @@ package com.acms.models;
 
 import java.time.Instant;
 
-import org.springframework.data.annotation.Id;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="retailer")
 public class Retailer {
 	@Id
 	private String retailerId;

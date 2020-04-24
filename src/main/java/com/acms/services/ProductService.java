@@ -1,6 +1,5 @@
 package com.acms.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -8,27 +7,23 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.acms.models.Product;
 import com.acms.repositories.ProductRepository;
 
 @Service
+@Transactional
 public class ProductService {
 
-	// @Autowired
-	// ProductRepository productRepository;
+	@Autowired
+	ProductRepository productRepository;
 
 	public List<Product> getAll() {
 
-		List<Product> products = new ArrayList<Product>();
-		SessionFactory sf = new Configuration().configure().buildSessionFactory();
-		Session session = sf.openSession();
-		session.beginTransaction();
-		products = (session.createQuery("from Product", Product.class)).list();
-		session.getTransaction().commit();
-		session.close();
-		return products;
+		return this.productRepository.findAll();
 
 	}
 
