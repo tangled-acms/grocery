@@ -1,41 +1,27 @@
 package com.acms.models;
 
+import java.time.Instant;
+
 import org.springframework.data.annotation.Id;
 
 public class Retailer {
-	int serialNumber;
 	@Id
-	String retailerId;
-	String name;
-	String address1;
-	String address2;
-	String address3;
-	int contact1;
-	int contact2;
-	int contact3;
+	private String retailerId;
+	private int timeStamp;
+	private String name;
+	private String address1;
+	private String address2;
+	private String address3;
+	private int contact1;
+	private int contact2;
+	private int contact3;
 	
-	public Retailer(int serialNumber, String retailerId, String name, String address1, String address2, String address3,
-			int contact1, int contact2, int contact3) {
+	public Retailer() {
 		super();
-		this.serialNumber= serialNumber;
-		this.retailerId = retailerId;
-		this.name = name;
-		this.address1 = address1;
-		this.address2 = address2;
-		this.address3 = address3;
-		this.contact1 = contact1;
-		this.contact2 = contact2;
-		this.contact3 = contact3;
+		long epochTime = Instant.now().getEpochSecond();
+		this.timeStamp = (int) epochTime;
 	}
 	
-	public int getSerialNumber() {
-		return serialNumber;
-	}
-
-	public void setSerialNumber(int slNo) {
-		this.serialNumber = slNo;
-	}
-
 	public String getRetailerId() {
 		return retailerId;
 	}
