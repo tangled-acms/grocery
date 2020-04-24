@@ -2,13 +2,18 @@ package com.acms.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.acms.models.Product;
@@ -73,9 +78,10 @@ public class ProductController {
 	 * REQUEST = Object containing all the details of the attributes.
 	 * RESPONSE = productID of the updated record.
 	 */
-	@PutMapping("/product/update")
-	public String update() {
-		return null;
+	@PutMapping("/product/update/{id}")
+	public Product update(@PathVariable(value="id") String productId, @Valid @RequestBody Product productDetails ) {
+		return productService.update(productId, productDetails);
+		
 	}
 	
 	/*
