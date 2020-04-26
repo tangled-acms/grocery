@@ -2,16 +2,28 @@ package com.acms.models;
 
 import java.time.Instant;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="billing")
 public class Billing {
+	@Id
+	@Column(name = "billid")
 	private int billId;
-	private int timeStamp;
+	@Column(name = "timestamp")
+	private long timeStamp;
+	@Column(name = "subtotal")
 	private double subTotal;
+	@Column(name = "paymentmode")
 	private String paymentMode;
 	
 	public Billing() {
 		super();
 		long epochTime = Instant.now().getEpochSecond();
-		this.timeStamp = (int) epochTime;
+		this.timeStamp = epochTime;
 	}
 
 	public int getBillId() {

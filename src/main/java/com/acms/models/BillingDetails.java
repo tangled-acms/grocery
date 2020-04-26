@@ -1,9 +1,20 @@
 package com.acms.models;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="billingdetails")
 public class BillingDetails {
+	@Id
+	@Column(name = "billid")
 	private int billId;
+	@Column(name = "productid")
 	private String productId;
 	private int quantity;
+	@Column(name = "mrp")
 	private double cost;
 	public int getBillId() {
 		return billId;

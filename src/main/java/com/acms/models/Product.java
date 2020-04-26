@@ -14,7 +14,7 @@ public class Product {
 	@Column(name = "productid")
 	private String productId;
 	@Column(name = "timestamp")
-	private int timeStamp;
+	private long timeStamp;
 	private String description;
 	private String name;
 	@Column(name = "mrp")
@@ -25,7 +25,7 @@ public class Product {
 	public Product() {
 		super();
 		long epochTime = Instant.now().getEpochSecond();
-		this.timeStamp = (int) epochTime;
+		this.timeStamp = epochTime;
 	}
 
 	public String getProductId() {

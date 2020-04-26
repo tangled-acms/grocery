@@ -2,15 +2,26 @@ package com.acms.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import com.acms.exceptions.ResourceNotFoundException;
 import com.acms.models.Billing;
+import com.acms.services.BillingService;
 
 
 public class BillingController {
+	
+	@Autowired
+	BillingService billingService;
+	
 	/*
 	 * Retrieves all the records in billing table.
 	 * METHOD = Get
@@ -19,7 +30,19 @@ public class BillingController {
 	 */
 	@GetMapping("/billing/getAll")
 	public List<Billing> getAll() {
-		return null;
+		return billingService.getAll();
+
+	}
+	
+	/*
+	 * Retrieves one record from billing table. 
+	 * METHOD = Get. 
+	 * REQUEST = Object containing billID. 
+	 * RESPONSE = Object containing all the details of that bill.
+	 */
+	@GetMapping("/billing/getById/{id}")
+	public Billing getById(@PathVariable(value = "id") int billId) throws ResourceNotFoundException {
+		return billingService.getById(billId);
 
 	}
 	
@@ -30,8 +53,8 @@ public class BillingController {
 	 * RESPONSE = billId
 	 */
 	@PostMapping("/billing/save")
-	public String postData() {
-		return null;
+	public Billing postData(@RequestBody Billing billing) {
+		return billingService.postData(billing);
 	}
 	
 	/*
@@ -40,18 +63,19 @@ public class BillingController {
 	 * REQUEST = Object containing all the details of the attributes.
 	 * RESPONSE = billId
 	 */
-	@PutMapping("/billing/update")
-	public String update() {
-		return null;
+	@PutMapping("/billing/update/{id}")
+	public Billing update(@PathVariable(value = "id") int billId, @Valid @RequestBody Billing billingDetails) throws ResourceNotFoundException {
+		return billingService.update(billId, billingDetails);
 	}
+	
 	/*
 	 * Deletes data in the billing table.
 	 * METHOD = Delete
 	 * REQUEST = Object containing billId of record that should be deleted.
 	 * RESPONSE = billId of the deleted record.
 	 */
-	@DeleteMapping("/billing/delete")
-	public String delete() {
-		return null;
+	@DeleteMapping("/billing/delete/{id}")
+	public int delete(@PathVariable(value = "id") int billId) throws ResourceNotFoundException {
+		return billingService.delete(billId);
 	}
 }

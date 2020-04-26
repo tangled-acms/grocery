@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.acms.exceptions.ResourceNotFoundException;
 import com.acms.models.Product;
 import com.acms.services.ProductService;
 
@@ -27,7 +27,7 @@ public class ProductController {
 	 * Retrieves all the records in product table. 
 	 * METHOD = Get. 
 	 * REQUEST = null.
-	 * RESPONSE = List of all the records.
+	 * RESPONSE = List of objects of Product type.
 	 */
 	@GetMapping("/product/getAll")
 	public List<Product> getAll() {
@@ -38,24 +38,12 @@ public class ProductController {
 	/*
 	 * Retrieves one record from product table. 
 	 * METHOD = Get. 
-	 * REQUEST = Object
-	 * containing productID. 
+	 * REQUEST = Object containing productID. 
 	 * RESPONSE = Object containing all the details of that product.
 	 */
-	@GetMapping("/product/getById")
-	public Product getById(@RequestParam String productId) {
+	@GetMapping("/product/getById/{id}")
+	public Product getById(@PathVariable(value = "id") String productId) throws ResourceNotFoundException {
 		return productService.getById(productId);
-
-	}
-
-	/*
-	 * Retrieves all the records in product table. 
-	 * METHOD = Get REQUEST = Object containing productName 
-	 * RESPONSE = Object containing all the details of that product.
-	 */
-	@GetMapping("/product/getByName")
-	public Product getByName(@RequestParam String name) {
-		return null;
 
 	}
 
@@ -63,7 +51,7 @@ public class ProductController {
 	 * Saves data in the product table. 
 	 * METHOD = Post. 
 	 * REQUEST = Object containing all the details of the attributes. 
-	 * RESPONSE = productID of the saved record.
+	 * RESPONSE = Object containing all the details of the saved record.
 	 */
 	@PostMapping("/product/save")
 	public Product postData(@RequestBody Product product) {
@@ -75,10 +63,10 @@ public class ProductController {
 	 * METHOD = Put. 
 	 * REQUEST = Object containing
 	 * all the details of the attributes. 
-	 * RESPONSE = productID of the updated record.
+	 * RESPONSE = Object containing all the details of the updated record.
 	 */
 	@PutMapping("/product/update/{id}")
-	public Product update(@PathVariable(value = "id") String productId, @Valid @RequestBody Product productDetails) {
+	public Product update(@PathVariable(value = "id") String productId, @Valid @RequestBody Product productDetails) throws ResourceNotFoundException {
 		return productService.update(productId, productDetails);
 
 	}
@@ -90,7 +78,7 @@ public class ProductController {
 	 * RESPONSE = productID of the deleted record.
 	 */
 	@DeleteMapping("/product/delete/{id}")
-	public String delete(@PathVariable(value = "id") String productId) {
+	public String delete(@PathVariable(value = "id") String productId) throws ResourceNotFoundException {
 		return productService.delete(productId);
 	}
 }

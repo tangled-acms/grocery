@@ -2,6 +2,7 @@ package com.acms.models;
 
 import java.time.Instant;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -10,7 +11,9 @@ import javax.persistence.Table;
 @Table(name="retailer")
 public class Retailer {
 	@Id
+	@Column(name = "retailerid")
 	private String retailerId;
+	@Column(name = "timestamp")
 	private int timeStamp;
 	private String name;
 	private String address1;

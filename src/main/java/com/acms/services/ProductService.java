@@ -3,11 +3,9 @@ package com.acms.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.acms.exceptions.ResourceNotFoundException;
 import com.acms.models.Product;
 import com.acms.repositories.ProductRepository;
 
@@ -24,20 +22,18 @@ public class ProductService {
 
 	}
 
-	public Product getById(String productId) {
-		return null;
+	public Product getById(String productId) throws ResourceNotFoundException{
+		Product product = productRepository.findById(productId)
+				.orElseThrow(() -> new ResourceNotFoundException("Product with ID " + productId + " not found!"));
+		return product;
 
-	}
-
-	public Product getByName() {
-		return null;
 	}
 
 	public Product postData(Product product) {
 		return this.productRepository.save(product);
 	}
 
-	public Product update(String productId, Product productdetails) {
+	public Product update(String productId, Product productdetails) throws ResourceNotFoundException {
 		Product product = productRepository.findById(productId)
 				.orElseThrow(() -> new ResourceNotFoundException("Product with ID " + productId + " not found!"));
 		product.setDescription(productdetails.getDescription());
@@ -48,7 +44,7 @@ public class ProductService {
 		return this.productRepository.save(product);
 	}
 
-	public String delete(String productId) {
+	public String delete(String productId) throws ResourceNotFoundException{
 		Product product = productRepository.findById(productId)
 				.orElseThrow(() -> new ResourceNotFoundException("Product with ID " + productId + " not found!"));
 		this.productRepository.delete(product);
