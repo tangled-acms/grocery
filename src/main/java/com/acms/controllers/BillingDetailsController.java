@@ -21,7 +21,8 @@ import com.acms.services.BillingDetailsService;
 public class BillingDetailsController {
 	
 	@Autowired
-	BillingDetailsService billingDetailsService;
+	private BillingDetailsService billingDetailsService;
+	
 	/*
 	 * Retrieves all the records in billingdetails table.
 	 * METHOD = Get.
@@ -34,14 +35,26 @@ public class BillingDetailsController {
 
 	}
 	
+	/*
+	 * Retrieves the records in billingdetails table with the given productId.
+	 * METHOD = Get.
+	 * REQUEST = billId.
+	 * RESPONSE = List of all the records which contain that billId.
+	 */
 	@GetMapping("/billingdetails/getById/{id}")
 	public List<BillingDetails> getByBillId(@PathVariable(value = "id") int billId) throws ResourceNotFoundException {
 		return billingDetailsService.getByBillId(billId);
 
 	}
 	
+	/*
+	 * Retrieves the records in billingdetails table with the given composite Id.
+	 * METHOD = Get.
+	 * REQUEST = Object containing both billId and productId.
+	 * RESPONSE = Object with that Id.
+	 */
 	@GetMapping("/billingdetails/getById")
-	public BillingDetails getById(@RequestBody BillingDetailsEmbeddedId embeddedId) throws ResourceNotFoundException {
+	public BillingDetails getById(@RequestBody BillingDetailsEmbeddedId embeddedId) throws ResourceNotFoundException { 
 		return billingDetailsService.getByID(embeddedId);
 
 	}
@@ -53,7 +66,7 @@ public class BillingDetailsController {
 	 * RESPONSE = billId of the new record.
 	 */
 	@PostMapping("/billingdetails/save")
-	public BillingDetails postData(BillingDetails billingDetails) {
+	public BillingDetails postData(@RequestBody BillingDetails billingDetails) {
 		return billingDetailsService.postData(billingDetails);
 	}
 	
@@ -61,11 +74,11 @@ public class BillingDetailsController {
 	 * Updates data in the billingdetails table.
 	 * METHOD = Put.
 	 * REQUEST = Object containing all the details of the attributes.
-	 * RESPONSE = billId of the updated record.
+	 * RESPONSE = Object of the updated record.
 	 */
 	@PutMapping("/billingdetails/update")
-	public String update() {
-		return null;
+	public BillingDetails update(@RequestBody BillingDetails billingDetails) throws ResourceNotFoundException {
+		return billingDetailsService.update(billingDetails);
 	}
 	/*
 	 * Deletes data in the billingdetails table.
@@ -74,7 +87,7 @@ public class BillingDetailsController {
 	 * RESPONSE = billID of the deleted record.
 	 */
 	@DeleteMapping("/billingdetails/delete")
-	public String delete() {
-		return null;
+	public String delete(@RequestBody BillingDetailsEmbeddedId embeddedId) throws ResourceNotFoundException {
+		return billingDetailsService.delete(embeddedId);
 	}
 }

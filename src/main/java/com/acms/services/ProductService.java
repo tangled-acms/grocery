@@ -14,15 +14,14 @@ import com.acms.repositories.ProductRepository;
 public class ProductService {
 
 	@Autowired
-	ProductRepository productRepository;
+	private ProductRepository productRepository;
 
 	public List<Product> getAll() {
-
 		return this.productRepository.findAll();
 
 	}
 
-	public Product getById(String productId) throws ResourceNotFoundException{
+	public Product getById(String productId) throws ResourceNotFoundException {
 		Product product = productRepository.findById(productId)
 				.orElseThrow(() -> new ResourceNotFoundException("Product with ID " + productId + " not found!"));
 		return product;
@@ -44,7 +43,7 @@ public class ProductService {
 		return this.productRepository.save(product);
 	}
 
-	public String delete(String productId) throws ResourceNotFoundException{
+	public String delete(String productId) throws ResourceNotFoundException {
 		Product product = productRepository.findById(productId)
 				.orElseThrow(() -> new ResourceNotFoundException("Product with ID " + productId + " not found!"));
 		this.productRepository.delete(product);

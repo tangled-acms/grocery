@@ -21,7 +21,7 @@ import com.acms.services.RetailerService;
 public class RetailerController {
 
 	@Autowired
-	RetailerService retailerService;
+	private RetailerService retailerService;
 
 	/*
 	 * Retrieves all the records in retailer table. 

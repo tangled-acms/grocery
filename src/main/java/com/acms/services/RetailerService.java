@@ -15,7 +15,7 @@ import com.acms.repositories.RetailerRepository;
 public class RetailerService {
 
 	@Autowired
-	RetailerRepository retailerRepository;
+	private RetailerRepository retailerRepository;
 
 	public List<Retailer> getAll() {
 

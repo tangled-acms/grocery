@@ -30,4 +30,11 @@ public class BillingDetails {
 	public void setCost(double cost) {
 		this.cost = cost;
 	}
+	public BillingDetailsEmbeddedId getBillingDetailsEmbeddedId() {
+		return billingDetailsEmbeddedId;
+	}
+	public void setBillingDetailsEmbeddedId(BillingDetailsEmbeddedId billingDetailsEmbeddedId) {
+		this.billingDetailsEmbeddedId = billingDetailsEmbeddedId;
+	}
+	
 }

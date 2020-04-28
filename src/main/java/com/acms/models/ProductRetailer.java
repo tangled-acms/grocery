@@ -2,33 +2,29 @@ package com.acms.models;
 
 import java.time.Instant;
 
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
+
+@Entity
+@Table(name = "productretailer")
 public class ProductRetailer {
-	private String productId;
-	private String retailerId;
-	private int timeStamp;
+	@EmbeddedId
+	@JsonUnwrapped
+	private ProductRetailerEmbeddedId productRetailerEmbeddedId;
+	@Column(name = "timestamp")
+	private long timeStamp;
 	private int quantity;
+	@Column(name = "mrp")
 	private double cost;
 
 	public ProductRetailer() {
 		super();
 		long epochTime = Instant.now().getEpochSecond();
-		this.timeStamp = (int) epochTime;
-	}
-
-	public String getProductId() {
-		return productId;
-	}
-
-	public void setProductId(String productId) {
-		this.productId = productId;
-	}
-
-	public String getRetailerId() {
-		return retailerId;
-	}
-
-	public void setRetailerId(String retailerId) {
-		this.retailerId = retailerId;
+		this.timeStamp = epochTime;
 	}
 
 	public int getQuantity() {
@@ -46,4 +42,13 @@ public class ProductRetailer {
 	public void setCost(double cost) {
 		this.cost = cost;
 	}
+
+	public ProductRetailerEmbeddedId getProductRetailerEmbeddedId() {
+		return productRetailerEmbeddedId;
+	}
+
+	public void setProductRetailerEmbeddedId(ProductRetailerEmbeddedId productRetailerEmbeddedId) {
+		this.productRetailerEmbeddedId = productRetailerEmbeddedId;
+	}
+
 }

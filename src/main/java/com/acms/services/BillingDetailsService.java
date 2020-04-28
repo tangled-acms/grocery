@@ -15,20 +15,20 @@ import com.acms.repositories.BillingDetailsRepository;
 @Transactional
 public class BillingDetailsService {
 	@Autowired
-	BillingDetailsRepository billingDetailsRepository;
+	private BillingDetailsRepository billingDetailsRepository;
 
 	public List<BillingDetails> getAll() {
 		return this.billingDetailsRepository.findAll();
 
 	}
-	
+
 	public BillingDetails getByID(BillingDetailsEmbeddedId embeddedId) throws ResourceNotFoundException {
-		return billingDetailsRepository.findById(embeddedId)
-				.orElseThrow(() -> new ResourceNotFoundException("Product with ID " + embeddedId + " not found!"));
-		
+		return billingDetailsRepository.findById(embeddedId).orElseThrow(
+				() -> new ResourceNotFoundException("Bill with ID " + embeddedId.toString() + " not found!"));
+
 	}
 
-	public List<BillingDetails> getByBillId(int billId) throws ResourceNotFoundException{
+	public List<BillingDetails> getByBillId(int billId) throws ResourceNotFoundException {
 		List<BillingDetails> billingDetails = billingDetailsRepository.findByBillingDetailsEmbeddedIdBillId(billId);
 		return billingDetails;
 
@@ -38,22 +38,20 @@ public class BillingDetailsService {
 		return this.billingDetailsRepository.save(billingDetails);
 	}
 
-	/*public BillingDetails update(int billId, BillingDetails billingDetailsObj) throws ResourceNotFoundException {
-		Product product = billingDetailsRepository.findById(productId)
-				.orElseThrow(() -> new ResourceNotFoundException("Product with ID " + productId + " not found!"));
-		product.setDescription(productdetails.getDescription());
-		product.setName(productdetails.getName());
-		product.setQuantity(productdetails.getQuantity());
-		product.setMRP(productdetails.getMRP());
-		product.setPromotion(productdetails.getPromotion());
-		return this.billingDetailsRepository.save(product);
-	}*/
+	public BillingDetails update(BillingDetails billingDetails) throws ResourceNotFoundException {
+		BillingDetailsEmbeddedId embeddedId = billingDetails.getBillingDetailsEmbeddedId();
+		BillingDetails objectToUpdate = billingDetailsRepository.findById(embeddedId).orElseThrow(
+				() -> new ResourceNotFoundException("Bill with ID " + embeddedId.toString() + " not found!"));
+		objectToUpdate.setQuantity(billingDetails.getQuantity());
+		objectToUpdate.setCost(billingDetails.getCost());
+		return this.billingDetailsRepository.save(objectToUpdate);
+	}
 
-	/*public String delete(String productId) throws ResourceNotFoundException{
-		Product product = billingDetailsRepository.findById(productId)
-				.orElseThrow(() -> new ResourceNotFoundException("Product with ID " + productId + " not found!"));
-		this.billingDetailsRepository.delete(product);
-		return productId;
+	public String delete(BillingDetailsEmbeddedId embeddedId) throws ResourceNotFoundException {
+		BillingDetails objectToDelete = billingDetailsRepository.findById(embeddedId).orElseThrow(
+				() -> new ResourceNotFoundException("Bill with ID " + embeddedId.toString() + " not found!"));
+		this.billingDetailsRepository.delete(objectToDelete);
+		return embeddedId.toString();
 
-	}*/
+	}
 }

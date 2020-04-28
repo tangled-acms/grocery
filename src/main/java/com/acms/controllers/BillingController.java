@@ -21,7 +21,7 @@ import com.acms.services.BillingService;
 public class BillingController {
 	
 	@Autowired
-	BillingService billingService;
+	private BillingService billingService;
 	
 	/*
 	 * Retrieves all the records in billing table.

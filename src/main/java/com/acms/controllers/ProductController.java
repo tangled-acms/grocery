@@ -21,7 +21,7 @@ import com.acms.services.ProductService;
 public class ProductController {
 
 	@Autowired
-	ProductService productService;
+	private ProductService productService;
 
 	/*
 	 * Retrieves all the records in product table. 

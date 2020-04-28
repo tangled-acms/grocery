@@ -15,7 +15,7 @@ import com.acms.repositories.BillingRepository;
 public class BillingService {
 
 	@Autowired
-	BillingRepository billingRepository;
+	private BillingRepository billingRepository;
 
 	public List<Billing> getAll() {
 		return this.billingRepository.findAll();

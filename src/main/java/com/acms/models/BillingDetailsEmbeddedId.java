@@ -3,14 +3,14 @@ package com.acms.models;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
-
+@Embeddable
 public class BillingDetailsEmbeddedId implements Serializable{
-	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 5911355292604736729L;
+	private static final long serialVersionUID = 1L;
 	@Column(name="billid")
 	private int billId;
 	@Column(name="productid")
@@ -34,6 +34,11 @@ public class BillingDetailsEmbeddedId implements Serializable{
 	}
 	public void setProductId(String productId) {
 		this.productId = productId;
+	}
+	
+	@Override
+	public String toString() {
+		return "BillingDetailsEmbeddedId [billId=" + billId + ", productId=" + productId + "]";
 	}
 	
 }
