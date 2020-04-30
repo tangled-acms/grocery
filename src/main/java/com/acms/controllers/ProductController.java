@@ -23,62 +23,64 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 
-	/*
+	/**
 	 * Retrieves all the records in product table. 
 	 * METHOD = Get. 
-	 * REQUEST = null.
-	 * RESPONSE = List of objects of Product type.
+	 * @param null.
+	 * @return List of objects of Product type.
 	 */
 	@GetMapping("/product/getAll")
-	public List<Product> getAll() {
-		return productService.getAll();
+	public List<Product> getAllProductDetails() {
+		return this.productService.getAllProductDetails();
 
 	}
 
-	/*
+	/**
 	 * Retrieves one record from product table. 
 	 * METHOD = Get. 
-	 * REQUEST = Object containing productID. 
-	 * RESPONSE = Object containing all the details of that product.
+	 * @param Object containing productID. 
+	 * @return Object containing all the details of that product.
+	 * @exception throws user defined exception ResourceNotFoundException if given Id does not exist
 	 */
 	@GetMapping("/product/getById/{id}")
-	public Product getById(@PathVariable(value = "id") String productId) throws ResourceNotFoundException {
-		return productService.getById(productId);
+	public Product getByProductId(@PathVariable(value = "id") String productId) throws ResourceNotFoundException {
+		return this.productService.getByProductId(productId);
 
 	}
 
-	/*
+	/**
 	 * Saves data in the product table. 
 	 * METHOD = Post. 
-	 * REQUEST = Object containing all the details of the attributes. 
-	 * RESPONSE = Object containing all the details of the saved record.
+	 * @param Object containing all the details of the attributes. 
+	 * @return Object containing all the details of the saved record.
 	 */
 	@PostMapping("/product/save")
-	public Product postData(@RequestBody Product product) {
-		return productService.postData(product);
+	public Product postDataToProductTable(@RequestBody Product product) {
+		return this.productService.postDataToProductTable(product);
 	}
 
-	/*
+	/**
 	 * Updates data in the product table. 
 	 * METHOD = Put. 
-	 * REQUEST = Object containing
-	 * all the details of the attributes. 
-	 * RESPONSE = Object containing all the details of the updated record.
+	 * @param Object containing all the details of the attributes. 
+	 * @return Object containing all the details of the updated record.
+	 * @exception throws user defined exception ResourceNotFoundException if given Id does not exist
 	 */
 	@PutMapping("/product/update/{id}")
-	public Product update(@PathVariable(value = "id") String productId, @Valid @RequestBody Product productDetails) throws ResourceNotFoundException {
-		return productService.update(productId, productDetails);
+	public Product updateProductDetails(@PathVariable(value = "id") String productId, @Valid @RequestBody Product productDetails) throws ResourceNotFoundException {
+		return this.productService.updateProductDetails(productId, productDetails);
 
 	}
 
-	/*
+	/**
 	 * Deletes data in the product table. 
 	 * METHOD = Delete 
-	 * REQUEST = Object containing productID of record that should be deleted. 
-	 * RESPONSE = productID of the deleted record.
+	 * @param Object containing productID of record that should be deleted. 
+	 * @return productID of the deleted record.
+	 * @exception throws user defined exception ResourceNotFoundException if given Id does not exist
 	 */
 	@DeleteMapping("/product/delete/{id}")
-	public String delete(@PathVariable(value = "id") String productId) throws ResourceNotFoundException {
-		return productService.delete(productId);
+	public String deleteProductRecord(@PathVariable(value = "id") String productId) throws ResourceNotFoundException {
+		return this.productService.deleteProductRecord(productId);
 	}
 }

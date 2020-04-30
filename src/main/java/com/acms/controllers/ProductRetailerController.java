@@ -22,71 +22,75 @@ public class ProductRetailerController {
 	@Autowired
 	private ProductRetailerService productRetailerService;
 	
-	/*
+	/**
 	 * Retrieves all the records in productretailer table.
 	 * METHOD = Get.
-	 * REQUEST = null.
-	 * RESPONSE = List of all the records.
+	 * @param null.
+	 * @return List of all the records.
 	 */
 	@GetMapping("/productretailer/getAll")
-	public List<ProductRetailer> getAll() {
-		return productRetailerService.getAll();
+	public List<ProductRetailer> getAllProductRetailerDetails() {
+		return this.productRetailerService.getAllProductRetailerDetails();
 
 	}
 	
-	/*
+	/**
 	 * Retrieves the records in productretailer table with the given productId.
 	 * METHOD = Get.
-	 * REQUEST = productId.
-	 * RESPONSE = List of all the records which contain that productId.
+	 * @param productId.
+	 * @return List of all the records which contain that productId.
+	 * @exception throws user defined exception ResourceNotFoundException if given Id does not exist
 	 */
 	@GetMapping("/productretailer/getById/{id}")
 	public List<ProductRetailer> getByProductId(@PathVariable(value = "id") String productId) throws ResourceNotFoundException {
-		return productRetailerService.getByProductId(productId);
+		return this.productRetailerService.getByProductId(productId);
 
 	}
 	
-	/*
+	/**
 	 * Retrieves the records in productretailer table with the given composite Id.
 	 * METHOD = Get.
-	 * REQUEST = Object containing both productId and retailerId.
-	 * RESPONSE = Object with that Id.
+	 * @param Object containing both productId and retailerId.
+	 * @return Object with that Id.
+	 * @exception throws user defined exception ResourceNotFoundException if given Id does not exist
 	 */
 	@GetMapping("/productretailer/getById")
-	public ProductRetailer getById(@RequestBody ProductRetailerEmbeddedId embeddedId) throws ResourceNotFoundException { 
-		return productRetailerService.getByID(embeddedId);
+	public ProductRetailer getByEmbeddedId(@RequestBody ProductRetailerEmbeddedId embeddedId) throws ResourceNotFoundException { 
+		return this.productRetailerService.getByEmbeddedId(embeddedId);
 
 	}
 	
-	/*
+	/**
 	 * Saves data in the productretailer table.
 	 * METHOD = Post.
-	 * REQUEST = Object containing all the details of the attributes.
-	 * RESPONSE = Object of the saved record.
+	 * @param Object containing all the details of the attributes.
+	 * @return Object of the saved record.
 	 */
 	@PostMapping("/productretailer/save")
-	public ProductRetailer postData(@RequestBody ProductRetailer productRetailerDetails) {
-		return productRetailerService.postData(productRetailerDetails);
+	public ProductRetailer postDataToProductRetailerTable(@RequestBody ProductRetailer productRetailerDetails) {
+		return this.productRetailerService.postDataToProductRetailerTable(productRetailerDetails);
 	}
 	
-	/*
+	/**
 	 * Updates data in the productretailer table.
 	 * METHOD = Put.
-	 * REQUEST = Object containing all the details of the attributes.
-	 * RESPONSE = Object of the updated record.
+	 * @param Object containing all the details of the attributes.
+	 * @return Object of the updated record.
+	 * @exception throws user defined exception ResourceNotFoundException if given Id does not exist
 	 */
 	@PutMapping("/productretailer/update")
-	public ProductRetailer update(@RequestBody ProductRetailer productRetailerDetails) throws ResourceNotFoundException {
-		return productRetailerService.update(productRetailerDetails);
+	public ProductRetailer updateProductRetailerRecord(@RequestBody ProductRetailer productRetailerDetails) throws ResourceNotFoundException {
+		return this.productRetailerService.updateProductRetailerRecord(productRetailerDetails);
 	}
-	/*
+	/**
 	 * Deletes data in the productretailer table.
 	 * METHOD = Delete.
-	 * REQUEST = Object containing ProductID of record that should be deleted.
-	 * RESPONSE = productId and retailerId of the deleted record.
+	 * @param Object containing ProductID of record that should be deleted.
+	 * @return productId and retailerId of the deleted record.
+	 * @exception throws user defined exception ResourceNotFoundException if given Id does not exist
 	 */
 	@DeleteMapping("/productretailer/delete")
-	public String delete(@RequestBody ProductRetailerEmbeddedId embeddedId) throws ResourceNotFoundException {
-		return productRetailerService.delete(embeddedId);
+	public String deleteProductRetailerRecord(@RequestBody ProductRetailerEmbeddedId embeddedId) throws ResourceNotFoundException {
+		return this.productRetailerService.deleteProductRetailerRecord(embeddedId);
 	}
 }

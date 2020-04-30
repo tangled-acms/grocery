@@ -16,24 +16,24 @@ public class ProductService {
 	@Autowired
 	private ProductRepository productRepository;
 
-	public List<Product> getAll() {
+	public List<Product> getAllProductDetails() {
 		return this.productRepository.findAll();
 
 	}
 
-	public Product getById(String productId) throws ResourceNotFoundException {
-		Product product = productRepository.findById(productId)
+	public Product getByProductId(String productId) throws ResourceNotFoundException {
+		Product product = this.productRepository.findById(productId)
 				.orElseThrow(() -> new ResourceNotFoundException("Product with ID " + productId + " not found!"));
 		return product;
 
 	}
 
-	public Product postData(Product product) {
+	public Product postDataToProductTable(Product product) {
 		return this.productRepository.save(product);
 	}
 
-	public Product update(String productId, Product productdetails) throws ResourceNotFoundException {
-		Product product = productRepository.findById(productId)
+	public Product updateProductDetails(String productId, Product productdetails) throws ResourceNotFoundException {
+		Product product = this.productRepository.findById(productId)
 				.orElseThrow(() -> new ResourceNotFoundException("Product with ID " + productId + " not found!"));
 		product.setDescription(productdetails.getDescription());
 		product.setName(productdetails.getName());
@@ -43,8 +43,8 @@ public class ProductService {
 		return this.productRepository.save(product);
 	}
 
-	public String delete(String productId) throws ResourceNotFoundException {
-		Product product = productRepository.findById(productId)
+	public String deleteProductRecord(String productId) throws ResourceNotFoundException {
+		Product product = this.productRepository.findById(productId)
 				.orElseThrow(() -> new ResourceNotFoundException("Product with ID " + productId + " not found!"));
 		this.productRepository.delete(product);
 		return productId;

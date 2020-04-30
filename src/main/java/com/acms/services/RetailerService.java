@@ -17,25 +17,25 @@ public class RetailerService {
 	@Autowired
 	private RetailerRepository retailerRepository;
 
-	public List<Retailer> getAll() {
+	public List<Retailer> getAllRetailerDetails() {
 
 		return this.retailerRepository.findAll();
 
 	}
 
-	public Retailer getById(String retailerId) throws ResourceNotFoundException {
-		Retailer retailer = retailerRepository.findById(retailerId)
+	public Retailer getByRetailerId(String retailerId) throws ResourceNotFoundException {
+		Retailer retailer = this.retailerRepository.findById(retailerId)
 				.orElseThrow(() -> new ResourceNotFoundException("Retailer with ID " + retailerId + " not found!"));
 		return retailer;
 
 	}
 
-	public Retailer postData(Retailer retailer) {
+	public Retailer postDataToRetailerTable(Retailer retailer) {
 		return this.retailerRepository.save(retailer);
 	}
 
-	public Retailer update(String retailerId, Retailer retailerdetails) throws ResourceNotFoundException {
-		Retailer retailer = retailerRepository.findById(retailerId)
+	public Retailer updateRetailerDetails(String retailerId, Retailer retailerdetails) throws ResourceNotFoundException {
+		Retailer retailer = this.retailerRepository.findById(retailerId)
 				.orElseThrow(() -> new ResourceNotFoundException("Retailer with ID " + retailerId + " not found!"));
 		retailer.setName(retailerdetails.getName());
 		retailer.setAddress1(retailerdetails.getAddress1());
@@ -47,8 +47,8 @@ public class RetailerService {
 		return this.retailerRepository.save(retailer);
 	}
 
-	public String delete(String retailerId) throws ResourceNotFoundException {
-		Retailer retailer = retailerRepository.findById(retailerId)
+	public String deleteRetailerReecord(String retailerId) throws ResourceNotFoundException {
+		Retailer retailer = this.retailerRepository.findById(retailerId)
 				.orElseThrow(() -> new ResourceNotFoundException("Retailer with ID " + retailerId + " not found!"));
 		this.retailerRepository.delete(retailer);
 		return retailerId;

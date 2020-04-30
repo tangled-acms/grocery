@@ -23,60 +23,64 @@ public class BillingController {
 	@Autowired
 	private BillingService billingService;
 	
-	/*
+	/**
 	 * Retrieves all the records in billing table.
 	 * METHOD = Get
 	 * REQUEST = null
-	 * RESPONSE = List of all the records
+	 * @param null
+	 * @return List of all the records
 	 */
 	@GetMapping("/billing/getAll")
-	public List<Billing> getAll() {
-		return billingService.getAll();
+	public List<Billing> getAllBillingRecords() {
+		return this.billingService.getAllBillingRecords();
 
 	}
 	
-	/*
+	/**
 	 * Retrieves one record from billing table. 
 	 * METHOD = Get. 
-	 * REQUEST = Object containing billID. 
-	 * RESPONSE = Object containing all the details of that bill.
+	 * @param Object containing billID. 
+	 * @return Object containing all the details of that bill.
+	 * @exception throws user defined exception ResourceNotFoundException if given Id does not exist
 	 */
 	@GetMapping("/billing/getById/{id}")
-	public Billing getById(@PathVariable(value = "id") int billId) throws ResourceNotFoundException {
-		return billingService.getById(billId);
+	public Billing getByBillId(@PathVariable(value = "id") int billId) throws ResourceNotFoundException {
+		return this.billingService.getByBillId(billId);
 
 	}
 	
-	/*
+	/**
 	 * Saves data in the billing table.
 	 * METHOD = Post
-	 * REQUEST = Object containing all the details of the attributes.
-	 * RESPONSE = billId
+	 * @param Object containing all the details of the attributes.
+	 * @return billId of the saved data
 	 */
 	@PostMapping("/billing/save")
-	public Billing postData(@RequestBody Billing billing) {
-		return billingService.postData(billing);
+	public Billing postDataToBillingTable(@RequestBody Billing billing) {
+		return this.billingService.postDataToBillingTable(billing);
 	}
 	
-	/*
+	/**
 	 * Updates data in the billing table.
 	 * METHOD = Put
-	 * REQUEST = Object containing all the details of the attributes.
-	 * RESPONSE = billId
+	 * @param Object containing all the details of the attributes.
+	 * @return billId
+	 * @exception throws user defined exception ResourceNotFoundException if given Id does not exist
 	 */
 	@PutMapping("/billing/update/{id}")
-	public Billing update(@PathVariable(value = "id") int billId, @Valid @RequestBody Billing billingDetails) throws ResourceNotFoundException {
-		return billingService.update(billId, billingDetails);
+	public Billing updateBillingRecord(@PathVariable(value = "id") int billId, @Valid @RequestBody Billing billingDetails) throws ResourceNotFoundException {
+		return this.billingService.updateBillingRecord(billId, billingDetails);
 	}
 	
-	/*
+	/**
 	 * Deletes data in the billing table.
 	 * METHOD = Delete
-	 * REQUEST = Object containing billId of record that should be deleted.
-	 * RESPONSE = billId of the deleted record.
+	 * @param Object containing billId of record that should be deleted.
+	 * @return billId of the deleted record.
+	 * @exception throws user defined exception ResourceNotFoundException if given Id does not exist
 	 */
 	@DeleteMapping("/billing/delete/{id}")
-	public int delete(@PathVariable(value = "id") int billId) throws ResourceNotFoundException {
-		return billingService.delete(billId);
+	public int deleteBillingRecord(@PathVariable(value = "id") int billId) throws ResourceNotFoundException {
+		return this.billingService.deleteBillingRecord(billId);
 	}
 }

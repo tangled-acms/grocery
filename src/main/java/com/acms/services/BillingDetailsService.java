@@ -17,38 +17,38 @@ public class BillingDetailsService {
 	@Autowired
 	private BillingDetailsRepository billingDetailsRepository;
 
-	public List<BillingDetails> getAll() {
+	public List<BillingDetails> getAllBillingDetails() {
 		return this.billingDetailsRepository.findAll();
 
 	}
 
-	public BillingDetails getByID(BillingDetailsEmbeddedId embeddedId) throws ResourceNotFoundException {
-		return billingDetailsRepository.findById(embeddedId).orElseThrow(
+	public BillingDetails getByEmbeddedBillId(BillingDetailsEmbeddedId embeddedId) throws ResourceNotFoundException {
+		return this.billingDetailsRepository.findById(embeddedId).orElseThrow(
 				() -> new ResourceNotFoundException("Bill with ID " + embeddedId.toString() + " not found!"));
 
 	}
 
 	public List<BillingDetails> getByBillId(int billId) throws ResourceNotFoundException {
-		List<BillingDetails> billingDetails = billingDetailsRepository.findByBillingDetailsEmbeddedIdBillId(billId);
+		List<BillingDetails> billingDetails = this.billingDetailsRepository.findByBillingDetailsEmbeddedIdBillId(billId);
 		return billingDetails;
 
 	}
 
-	public BillingDetails postData(BillingDetails billingDetails) {
+	public BillingDetails postDataToBillingDetails(BillingDetails billingDetails) {
 		return this.billingDetailsRepository.save(billingDetails);
 	}
 
-	public BillingDetails update(BillingDetails billingDetails) throws ResourceNotFoundException {
+	public BillingDetails updateBillingDetailsRecord(BillingDetails billingDetails) throws ResourceNotFoundException {
 		BillingDetailsEmbeddedId embeddedId = billingDetails.getBillingDetailsEmbeddedId();
-		BillingDetails objectToUpdate = billingDetailsRepository.findById(embeddedId).orElseThrow(
+		BillingDetails objectToUpdate = this.billingDetailsRepository.findById(embeddedId).orElseThrow(
 				() -> new ResourceNotFoundException("Bill with ID " + embeddedId.toString() + " not found!"));
 		objectToUpdate.setQuantity(billingDetails.getQuantity());
 		objectToUpdate.setCost(billingDetails.getCost());
 		return this.billingDetailsRepository.save(objectToUpdate);
 	}
 
-	public String delete(BillingDetailsEmbeddedId embeddedId) throws ResourceNotFoundException {
-		BillingDetails objectToDelete = billingDetailsRepository.findById(embeddedId).orElseThrow(
+	public String deleteBillingDetailsRecord(BillingDetailsEmbeddedId embeddedId) throws ResourceNotFoundException {
+		BillingDetails objectToDelete = this.billingDetailsRepository.findById(embeddedId).orElseThrow(
 				() -> new ResourceNotFoundException("Bill with ID " + embeddedId.toString() + " not found!"));
 		this.billingDetailsRepository.delete(objectToDelete);
 		return embeddedId.toString();

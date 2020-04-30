@@ -23,71 +23,75 @@ public class BillingDetailsController {
 	@Autowired
 	private BillingDetailsService billingDetailsService;
 	
-	/*
+	/**
 	 * Retrieves all the records in billingdetails table.
 	 * METHOD = Get.
-	 * REQUEST = null.
-	 * RESPONSE = List of all the records.
+	 * @param null.
+	 * @return List of all the records.
 	 */
 	@GetMapping("/billingdetails/getAll")
-	public List<BillingDetails> getAll() {
-		return billingDetailsService.getAll();
+	public List<BillingDetails> getAllBillingDetails() {
+		return this.billingDetailsService.getAllBillingDetails();
 
 	}
 	
-	/*
+	/**
 	 * Retrieves the records in billingdetails table with the given productId.
 	 * METHOD = Get.
-	 * REQUEST = billId.
-	 * RESPONSE = List of all the records which contain that billId.
+	 * @param billId.
+	 * @return List of all the records which contain that billId.
+	 * @exception throws user defined exception ResourceNotFoundException if given Id does not exist
 	 */
 	@GetMapping("/billingdetails/getById/{id}")
 	public List<BillingDetails> getByBillId(@PathVariable(value = "id") int billId) throws ResourceNotFoundException {
-		return billingDetailsService.getByBillId(billId);
+		return this.billingDetailsService.getByBillId(billId);
 
 	}
 	
-	/*
+	/**
 	 * Retrieves the records in billingdetails table with the given composite Id.
 	 * METHOD = Get.
-	 * REQUEST = Object containing both billId and productId.
-	 * RESPONSE = Object with that Id.
+	 * @param Object containing both billId and productId.
+	 * @return Object with that Id.
+	 * @exception throws user defined exception ResourceNotFoundException if given Id does not exist
 	 */
 	@GetMapping("/billingdetails/getById")
-	public BillingDetails getById(@RequestBody BillingDetailsEmbeddedId embeddedId) throws ResourceNotFoundException { 
-		return billingDetailsService.getByID(embeddedId);
+	public BillingDetails getByEmbeddedBillId(@RequestBody BillingDetailsEmbeddedId embeddedId) throws ResourceNotFoundException { 
+		return this.billingDetailsService.getByEmbeddedBillId(embeddedId);
 
 	}
 	
-	/*
+	/**
 	 * Saves data in the billingdetails table.
 	 * METHOD = Post.
-	 * REQUEST = Object containing all the details of the attributes.
-	 * RESPONSE = billId of the new record.
+	 * @param Object containing all the details of the attributes.
+	 * @return billId of the new record.
 	 */
 	@PostMapping("/billingdetails/save")
-	public BillingDetails postData(@RequestBody BillingDetails billingDetails) {
-		return billingDetailsService.postData(billingDetails);
+	public BillingDetails postDataToBillingDetails(@RequestBody BillingDetails billingDetails) {
+		return this.billingDetailsService.postDataToBillingDetails(billingDetails);
 	}
 	
-	/*
+	/**
 	 * Updates data in the billingdetails table.
 	 * METHOD = Put.
-	 * REQUEST = Object containing all the details of the attributes.
-	 * RESPONSE = Object of the updated record.
+	 * @param Object containing all the details of the attributes.
+	 * @return Object of the updated record.
+	 * @exception throws user defined exception ResourceNotFoundException if given Id does not exist
 	 */
 	@PutMapping("/billingdetails/update")
-	public BillingDetails update(@RequestBody BillingDetails billingDetails) throws ResourceNotFoundException {
-		return billingDetailsService.update(billingDetails);
+	public BillingDetails updateBillingDetailsRecord(@RequestBody BillingDetails billingDetails) throws ResourceNotFoundException {
+		return this.billingDetailsService.updateBillingDetailsRecord(billingDetails);
 	}
-	/*
+	/**
 	 * Deletes data in the billingdetails table.
 	 * METHOD = Delete.
-	 * REQUEST = Object containing ProductID of record that should be deleted.
-	 * RESPONSE = billID of the deleted record.
+	 * @param Object containing ProductID of record that should be deleted.
+	 * @return billID of the deleted record.
+	 * @exception throws user defined exception ResourceNotFoundException if given Id does not exist
 	 */
 	@DeleteMapping("/billingdetails/delete")
-	public String delete(@RequestBody BillingDetailsEmbeddedId embeddedId) throws ResourceNotFoundException {
-		return billingDetailsService.delete(embeddedId);
+	public String deleteBillingDetailsRecord(@RequestBody BillingDetailsEmbeddedId embeddedId) throws ResourceNotFoundException {
+		return this.billingDetailsService.deleteBillingDetailsRecord(embeddedId);
 	}
 }

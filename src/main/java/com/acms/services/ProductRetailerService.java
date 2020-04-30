@@ -17,39 +17,39 @@ public class ProductRetailerService {
 	@Autowired
 	private ProductRetailerRepository productRetailerRepository;
 
-	public List<ProductRetailer> getAll() {
+	public List<ProductRetailer> getAllProductRetailerDetails() {
 		return this.productRetailerRepository.findAll();
 
 	}
 
-	public ProductRetailer getByID(ProductRetailerEmbeddedId embeddedId) throws ResourceNotFoundException {
-		return productRetailerRepository.findById(embeddedId).orElseThrow(
+	public ProductRetailer getByEmbeddedId(ProductRetailerEmbeddedId embeddedId) throws ResourceNotFoundException {
+		return this.productRetailerRepository.findById(embeddedId).orElseThrow(
 				() -> new ResourceNotFoundException("Entry with ID " + embeddedId.toString() + " not found!"));
 
 	}
 
 	public List<ProductRetailer> getByProductId(String productId) throws ResourceNotFoundException {
-		List<ProductRetailer> productRetailerDetails = productRetailerRepository
+		List<ProductRetailer> productRetailerDetails = this.productRetailerRepository
 				.findByProductRetailerEmbeddedIdProductId(productId);
 		return productRetailerDetails;
 
 	}
 
-	public ProductRetailer postData(ProductRetailer productRetailerDetails) {
+	public ProductRetailer postDataToProductRetailerTable(ProductRetailer productRetailerDetails) {
 		return this.productRetailerRepository.save(productRetailerDetails);
 	}
 
-	public ProductRetailer update(ProductRetailer productRetailerDetails) throws ResourceNotFoundException {
+	public ProductRetailer updateProductRetailerRecord(ProductRetailer productRetailerDetails) throws ResourceNotFoundException {
 		ProductRetailerEmbeddedId embeddedId = productRetailerDetails.getProductRetailerEmbeddedId();
-		ProductRetailer objectToUpdate = productRetailerRepository.findById(embeddedId).orElseThrow(
+		ProductRetailer objectToUpdate = this.productRetailerRepository.findById(embeddedId).orElseThrow(
 				() -> new ResourceNotFoundException("Entry with ID " + embeddedId.toString() + " not found!"));
 		objectToUpdate.setQuantity(productRetailerDetails.getQuantity());
 		objectToUpdate.setCost(productRetailerDetails.getCost());
 		return this.productRetailerRepository.save(objectToUpdate);
 	}
 
-	public String delete(ProductRetailerEmbeddedId embeddedId) throws ResourceNotFoundException {
-		ProductRetailer objectToDelete = productRetailerRepository.findById(embeddedId).orElseThrow(
+	public String deleteProductRetailerRecord(ProductRetailerEmbeddedId embeddedId) throws ResourceNotFoundException {
+		ProductRetailer objectToDelete = this.productRetailerRepository.findById(embeddedId).orElseThrow(
 				() -> new ResourceNotFoundException("Bill with ID " + embeddedId.toString() + " not found!"));
 		this.productRetailerRepository.delete(objectToDelete);
 		return embeddedId.toString();
