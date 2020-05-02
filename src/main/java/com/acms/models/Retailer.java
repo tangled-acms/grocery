@@ -14,7 +14,7 @@ public class Retailer {
 	@Column(name = "retailerid")
 	private String retailerId;
 	@Column(name = "timestamp")
-	private int timeStamp;
+	private long timeStamp;
 	private String name;
 	private String address1;
 	private String address2;
@@ -26,7 +26,7 @@ public class Retailer {
 	public Retailer() {
 		super();
 		long epochTime = Instant.now().getEpochSecond();
-		this.timeStamp = (int) epochTime;
+		this.timeStamp = epochTime;
 	}
 	
 	public String getRetailerId() {
