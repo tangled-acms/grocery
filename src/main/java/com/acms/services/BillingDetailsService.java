@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.acms.exceptions.ResourceNotFoundException;
 import com.acms.models.BillingDetails;
 import com.acms.models.BillingDetailsEmbeddedId;
+import com.acms.models.Product;
 import com.acms.repositories.BillingDetailsRepository;
 
 @Service
@@ -17,6 +18,9 @@ public class BillingDetailsService {
 	@Autowired
 	private BillingDetailsRepository billingDetailsRepository;
 
+	@Autowired
+	private ProductService productService;
+	
 	public List<BillingDetails> getAllBillingDetails() {
 		return this.billingDetailsRepository.findAll();
 
@@ -34,7 +38,9 @@ public class BillingDetailsService {
 
 	}
 
-	public BillingDetails postDataToBillingDetails(BillingDetails billingDetails) {
+	public BillingDetails postDataToBillingDetails(BillingDetails billingDetails) throws ResourceNotFoundException {
+		Product product = productService.getByProductId(billingDetails.getBillingDetailsEmbeddedId().getProductId());
+		billingDetails.setCost(((product.getMRP())-(product.getPromotion()*0.01))*(billingDetails.getQuantity()));
 		return this.billingDetailsRepository.save(billingDetails);
 	}
 

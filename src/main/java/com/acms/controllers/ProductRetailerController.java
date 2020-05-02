@@ -82,6 +82,7 @@ public class ProductRetailerController {
 	public ProductRetailer updateProductRetailerRecord(@RequestBody ProductRetailer productRetailerDetails) throws ResourceNotFoundException {
 		return this.productRetailerService.updateProductRetailerRecord(productRetailerDetails);
 	}
+	
 	/**
 	 * Deletes data in the productretailer table.
 	 * METHOD = Delete.

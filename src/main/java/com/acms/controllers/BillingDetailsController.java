@@ -66,9 +66,10 @@ public class BillingDetailsController {
 	 * METHOD = Post.
 	 * @param Object containing all the details of the attributes.
 	 * @return billId of the new record.
+	 * @throws ResourceNotFoundException 
 	 */
 	@PostMapping("/billingdetails/save")
-	public BillingDetails postDataToBillingDetails(@RequestBody BillingDetails billingDetails) {
+	public BillingDetails postDataToBillingDetails(@RequestBody BillingDetails billingDetails) throws ResourceNotFoundException {
 		return this.billingDetailsService.postDataToBillingDetails(billingDetails);
 	}
 	
