@@ -17,8 +17,7 @@ public class Product {
 	private long timeStamp;
 	private String description;
 	private String name;
-	@Column(name = "mrp")
-	private double MRP;
+	private double mrp;
 	private int quantity;
 	private double promotion;
 	
@@ -53,11 +52,11 @@ public class Product {
 	}
 
 	public double getMRP() {
-		return MRP;
+		return mrp;
 	}
 
 	public void setMRP(double mRP) {
-		MRP = mRP;
+		this.mrp = mRP;
 	}
 
 	public int getQuantity() {
@@ -79,6 +78,6 @@ public class Product {
 	@Override
 	public String toString() {
 		return "Product [productId=" + productId + ", timeStamp=" + timeStamp + ", description=" + description
-				+ ", name=" + name + ", MRP=" + MRP + ", quantity=" + quantity + ", promotion=" + promotion + "]";
+				+ ", name=" + name + ", MRP=" + mrp + ", quantity=" + quantity + ", promotion=" + promotion + "]";
 	}
 }
