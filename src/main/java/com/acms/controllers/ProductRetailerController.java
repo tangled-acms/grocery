@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,10 +40,12 @@ public class ProductRetailerController {
 	 * @return List of all the records which contain that productId.
 	 * @exception throws user defined exception ResourceNotFoundException if given Id does not exist
 	 */
-	@GetMapping("/productretailer/getById/{id}")
-	public List<ProductRetailer> getByProductId(@PathVariable(value = "id") String productId) throws ResourceNotFoundException {
-		return this.productRetailerService.getByProductId(productId);
-
+	@GetMapping("/productretailer/getByProductRetailerId")
+	public List<ProductRetailer> getByProductId(@RequestBody ProductRetailerEmbeddedId embeddedId) throws ResourceNotFoundException {
+		if(embeddedId.getProductId()!=null)
+			return this.productRetailerService.getByProductId(embeddedId.getProductId());
+		else
+			return this.productRetailerService.getByRetailerId(embeddedId.getRetailerId());
 	}
 	
 	/**

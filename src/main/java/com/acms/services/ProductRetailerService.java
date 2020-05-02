@@ -34,6 +34,12 @@ public class ProductRetailerService {
 		return productRetailerDetails;
 
 	}
+	
+	public List<ProductRetailer> getByRetailerId(String retailerId) {
+		List<ProductRetailer> productRetailerDetails = this.productRetailerRepository
+				.findByProductRetailerEmbeddedIdRetailerId(retailerId);
+		return productRetailerDetails;
+	}
 
 	public ProductRetailer postDataToProductRetailerTable(ProductRetailer productRetailerDetails) {
 		return this.productRetailerRepository.save(productRetailerDetails);
