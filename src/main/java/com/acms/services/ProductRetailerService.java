@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.acms.exceptions.ResourceNotFoundException;
+import com.acms.models.Product;
 import com.acms.models.ProductRetailer;
 import com.acms.models.ProductRetailerEmbeddedId;
 import com.acms.repositories.ProductRetailerRepository;
@@ -16,6 +17,9 @@ import com.acms.repositories.ProductRetailerRepository;
 public class ProductRetailerService {
 	@Autowired
 	private ProductRetailerRepository productRetailerRepository;
+	
+	@Autowired
+	private ProductService productService;
 
 	public List<ProductRetailer> getAllProductRetailerDetails() {
 		return this.productRetailerRepository.findAll();
@@ -41,7 +45,12 @@ public class ProductRetailerService {
 		return productRetailerDetails;
 	}
 
-	public ProductRetailer postDataToProductRetailerTable(ProductRetailer productRetailerDetails) {
+	public ProductRetailer postDataToProductRetailerTable(ProductRetailer productRetailerDetails) throws ResourceNotFoundException {
+		String productId = productRetailerDetails.getProductRetailerEmbeddedId().getProductId();
+		Product product = productService.getByProductId(productId);
+		int quantity = product.getQuantity();
+		product.setQuantity((quantity+productRetailerDetails.getQuantity()));
+		productService.updateProductDetails(productId, product);
 		return this.productRetailerRepository.save(productRetailerDetails);
 	}
 

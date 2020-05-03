@@ -66,9 +66,10 @@ public class ProductRetailerController {
 	 * METHOD = Post.
 	 * @param Object containing all the details of the attributes.
 	 * @return Object of the saved record.
+	 * @throws ResourceNotFoundException 
 	 */
 	@PostMapping("/productretailer/save")
-	public ProductRetailer postDataToProductRetailerTable(@RequestBody ProductRetailer productRetailerDetails) {
+	public ProductRetailer postDataToProductRetailerTable(@RequestBody ProductRetailer productRetailerDetails) throws ResourceNotFoundException {
 		return this.productRetailerService.postDataToProductRetailerTable(productRetailerDetails);
 	}
 	
