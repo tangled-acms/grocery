@@ -17,14 +17,13 @@ import com.acms.services.ProductRetailerService;
 
 @RestController
 public class ProductRetailerController {
-	
+
 	@Autowired
 	private ProductRetailerService productRetailerService;
-	
+
 	/**
-	 * Retrieves all the records in productretailer table.
-	 * METHOD = Get.
-	 * @param null.
+	 * Retrieves all the records in productretailer table. METHOD = Get.
+	 * 
 	 * @return List of all the records.
 	 */
 	@GetMapping("/productretailer/getAll")
@@ -32,68 +31,85 @@ public class ProductRetailerController {
 		return this.productRetailerService.getAllProductRetailerDetails();
 
 	}
-	
+
 	/**
 	 * Retrieves the records in productretailer table with the given productId.
 	 * METHOD = Get.
-	 * @param productId.
+	 * 
+	 * @param productId
+	 *            Id of the requried record.
 	 * @return List of all the records which contain that productId.
-	 * @exception throws user defined exception ResourceNotFoundException if given Id does not exist
+	 * @throws ResourceNotFoundException
+	 *             If given Id does not exist
 	 */
 	@GetMapping("/productretailer/getByProductRetailerId")
-	public List<ProductRetailer> getByProductId(@RequestBody ProductRetailerEmbeddedId embeddedId) throws ResourceNotFoundException {
-		if(embeddedId.getProductId()!=null)
+	public List<ProductRetailer> getByProductId(@RequestBody ProductRetailerEmbeddedId embeddedId)
+			throws ResourceNotFoundException {
+		if (embeddedId.getProductId() != null)
 			return this.productRetailerService.getByProductId(embeddedId.getProductId());
 		else
 			return this.productRetailerService.getByRetailerId(embeddedId.getRetailerId());
 	}
-	
+
 	/**
 	 * Retrieves the records in productretailer table with the given composite Id.
 	 * METHOD = Get.
-	 * @param Object containing both productId and retailerId.
+	 * 
+	 * @param embeddedId
+	 *            Object containing both productId and retailerId.
 	 * @return Object with that Id.
-	 * @exception throws user defined exception ResourceNotFoundException if given Id does not exist
+	 * @throws ResourceNotFoundException
+	 *             If given Id does not exist
 	 */
 	@GetMapping("/productretailer/getById")
-	public ProductRetailer getByEmbeddedId(@RequestBody ProductRetailerEmbeddedId embeddedId) throws ResourceNotFoundException { 
+	public ProductRetailer getByEmbeddedId(@RequestBody ProductRetailerEmbeddedId embeddedId)
+			throws ResourceNotFoundException {
 		return this.productRetailerService.getByEmbeddedId(embeddedId);
 
 	}
-	
+
 	/**
-	 * Saves data in the productretailer table.
-	 * METHOD = Post.
-	 * @param Object containing all the details of the attributes.
+	 * Saves data in the productretailer table. METHOD = Post.
+	 * 
+	 * @param productRetailerDetails
+	 *            Object containing all the details of the attributes.
 	 * @return Object of the saved record.
-	 * @throws ResourceNotFoundException 
+	 * @throws ResourceNotFoundException
+	 *             If given Id does not exist
 	 */
 	@PostMapping("/productretailer/save")
-	public ProductRetailer postDataToProductRetailerTable(@RequestBody ProductRetailer productRetailerDetails) throws ResourceNotFoundException {
+	public ProductRetailer postDataToProductRetailerTable(@RequestBody ProductRetailer productRetailerDetails)
+			throws ResourceNotFoundException {
 		return this.productRetailerService.postDataToProductRetailerTable(productRetailerDetails);
 	}
-	
+
 	/**
-	 * Updates data in the productretailer table.
-	 * METHOD = Put.
-	 * @param Object containing all the details of the attributes.
+	 * Updates data in the productretailer table. METHOD = Put.
+	 * 
+	 * @param productRetailerDetails
+	 *            Object containing all the details of the attributes.
 	 * @return Object of the updated record.
-	 * @exception throws user defined exception ResourceNotFoundException if given Id does not exist
+	 * @throws ResourceNotFoundException
+	 *             If given Id does not exist
 	 */
 	@PutMapping("/productretailer/update")
-	public ProductRetailer updateProductRetailerRecord(@RequestBody ProductRetailer productRetailerDetails) throws ResourceNotFoundException {
+	public ProductRetailer updateProductRetailerRecord(@RequestBody ProductRetailer productRetailerDetails)
+			throws ResourceNotFoundException {
 		return this.productRetailerService.updateProductRetailerRecord(productRetailerDetails);
 	}
-	
+
 	/**
-	 * Deletes data in the productretailer table.
-	 * METHOD = Delete.
-	 * @param Object containing ProductID of record that should be deleted.
+	 * Deletes data in the productretailer table. METHOD = Delete.
+	 * 
+	 * @param embeddedId
+	 *            Object containing ProductID of record that should be deleted.
 	 * @return productId and retailerId of the deleted record.
-	 * @exception throws user defined exception ResourceNotFoundException if given Id does not exist
+	 * @throws ResourceNotFoundException
+	 *             If given Id does not exist
 	 */
 	@DeleteMapping("/productretailer/delete")
-	public String deleteProductRetailerRecord(@RequestBody ProductRetailerEmbeddedId embeddedId) throws ResourceNotFoundException {
+	public String deleteProductRetailerRecord(@RequestBody ProductRetailerEmbeddedId embeddedId)
+			throws ResourceNotFoundException {
 		return this.productRetailerService.deleteProductRetailerRecord(embeddedId);
 	}
 }

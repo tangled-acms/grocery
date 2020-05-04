@@ -24,8 +24,8 @@ public class ProductController {
 	private ProductService productService;
 
 	/**
-	 * Retrieves all the records in product table. 
-	 * METHOD = Get. 
+	 * Retrieves all the records in product table. METHOD = Get.
+	 * 
 	 * @param null.
 	 * @return List of objects of Product type.
 	 */
@@ -36,11 +36,13 @@ public class ProductController {
 	}
 
 	/**
-	 * Retrieves one record from product table. 
-	 * METHOD = Get. 
-	 * @param Object containing productID. 
+	 * Retrieves one record from product table. METHOD = Get.
+	 * 
+	 * @param productId
+	 *            Id of one record
 	 * @return Object containing all the details of that product.
-	 * @exception throws user defined exception ResourceNotFoundException if given Id does not exist
+	 * @throws ResourceNotFoundException
+	 *             If given Id does not exist
 	 */
 	@GetMapping("/product/getById/{id}")
 	public Product getByProductId(@PathVariable(value = "id") String productId) throws ResourceNotFoundException {
@@ -49,9 +51,10 @@ public class ProductController {
 	}
 
 	/**
-	 * Saves data in the product table. 
-	 * METHOD = Post. 
-	 * @param Object containing all the details of the attributes. 
+	 * Saves data in the product table. METHOD = Post.
+	 * 
+	 * @param product
+	 *            Object containing all the details of the attributes.
 	 * @return Object containing all the details of the saved record.
 	 */
 	@PostMapping("/product/save")
@@ -60,24 +63,31 @@ public class ProductController {
 	}
 
 	/**
-	 * Updates data in the product table. 
-	 * METHOD = Put. 
-	 * @param Object containing all the details of the attributes. 
+	 * Updates data in the product table. METHOD = Put.
+	 * 
+	 * @param productId
+	 *            Id of the record to be updated
+	 * @param product
+	 *            Object containing all the details of the new values.
 	 * @return Object containing all the details of the updated record.
-	 * @exception throws user defined exception ResourceNotFoundException if given Id does not exist
+	 * @throws ResourceNotFoundException
+	 *             If given Id does not exist
 	 */
 	@PutMapping("/product/update/{id}")
-	public Product updateProductDetails(@PathVariable(value = "id") String productId, @Valid @RequestBody Product productDetails) throws ResourceNotFoundException {
+	public Product updateProductDetails(@PathVariable(value = "id") String productId,
+			@Valid @RequestBody Product productDetails) throws ResourceNotFoundException {
 		return this.productService.updateProductDetails(productId, productDetails);
 
 	}
 
 	/**
-	 * Deletes data in the product table. 
-	 * METHOD = Delete 
-	 * @param Object containing productID of record that should be deleted. 
+	 * Deletes data in the product table. METHOD = Delete
+	 * 
+	 * @param productId
+	 *            Id of the record to be updated
 	 * @return productID of the deleted record.
-	 * @exception throws user defined exception ResourceNotFoundException if given Id does not exist
+	 * @throws ResourceNotFoundException
+	 *             If given Id does not exist
 	 */
 	@DeleteMapping("/product/delete/{id}")
 	public String deleteProductRecord(@PathVariable(value = "id") String productId) throws ResourceNotFoundException {

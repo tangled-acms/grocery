@@ -16,11 +16,24 @@ public class ProductService {
 	@Autowired
 	private ProductRepository productRepository;
 
+	/**
+	 * Function to retrieve all records in Product Table
+	 * 
+	 * @return List of all records in Product Table
+	 */
 	public List<Product> getAllProductDetails() {
 		return this.productRepository.findAll();
 
 	}
 
+	/**
+	 * Function to retrieve a single record in Product Table
+	 * 
+	 * @param productId
+	 *            Id of the required record
+	 * @return Object with given ID of all records in Product Table
+	 * @throws ResourceNotFoundException
+	 */
 	public Product getByProductId(String productId) throws ResourceNotFoundException {
 		Product product = this.productRepository.findById(productId)
 				.orElseThrow(() -> new ResourceNotFoundException("Product with ID " + productId + " not found!"));
@@ -28,10 +41,27 @@ public class ProductService {
 
 	}
 
+	/**
+	 * Function to save an object to Product Table
+	 * 
+	 * @param product
+	 *            An object with details of Product Table
+	 * @return Object that is saved
+	 */
 	public Product postDataToProductTable(Product product) {
 		return this.productRepository.save(product);
 	}
 
+	/**
+	 * Function to Update an object in Product Table
+	 * 
+	 * @param productId
+	 *            Id of the required record
+	 * @param productdetails
+	 *            An object with new details of Product Table
+	 * @return Object that is updated and saved
+	 * @throws ResourceNotFoundException
+	 */
 	public Product updateProductDetails(String productId, Product productdetails) throws ResourceNotFoundException {
 		Product product = this.productRepository.findById(productId)
 				.orElseThrow(() -> new ResourceNotFoundException("Product with ID " + productId + " not found!"));
@@ -43,6 +73,14 @@ public class ProductService {
 		return this.productRepository.save(product);
 	}
 
+	/**
+	 * Function to delete an object in Product Table
+	 * 
+	 * @param productId
+	 *            Id of the required record
+	 * @return productId of deleted record
+	 * @throws ResourceNotFoundException
+	 */
 	public String deleteProductRecord(String productId) throws ResourceNotFoundException {
 		Product product = this.productRepository.findById(productId)
 				.orElseThrow(() -> new ResourceNotFoundException("Product with ID " + productId + " not found!"));
