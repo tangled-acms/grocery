@@ -29,6 +29,7 @@ public class ProductRetailerController {
 	 */
 	@GetMapping("/productretailer/getAll")
 	public List<ProductRetailer> getAllProductRetailerDetails() {
+		System.out.println(this.productRetailerService.getAllProductRetailerDetails());
 		return this.productRetailerService.getAllProductRetailerDetails();
 
 	}
