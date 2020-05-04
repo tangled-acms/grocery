@@ -1,44 +1,45 @@
 package com.acms.grocery;
 
-import java.util.Collections;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Test;
-//import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.acms.repositories.ProductRepository;
-import com.acms.services.ProductService;
+import com.acms.controllers.ProductController;
 
-
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = GroceryApplication.class)
+@RunWith( SpringJUnit4ClassRunner.class )
+@SpringBootTest
+@AutoConfigureMockMvc
 public class GroceryApplicationTests {
-	
 	@Autowired
 	MockMvc mockMvc;
 	
-	@MockBean
-	ProductService productService;
+	@Autowired
+	ProductController productController;
 	
 	@Test
 	public void contextLoads() throws Exception {
+		assertThat(productController).isNotNull();
 		
-		Mockito.when(productService.getAllProductDetails()).thenReturn(Collections.emptyList());
-		MvcResult mvcResult = mockMvc.perform(
-				MockMvcRequestBuilders.get("/product/getAll")
-				).andReturn();
-		System.out.println(mvcResult.getResponse());
-		Mockito.verify(productService).getAllProductDetails();
 	}
+	
+	
+	@Test
+	public void unknownRoute() throws Exception {
+		this.mockMvc.perform(get("/RIP")).andExpect(status().is4xxClientError());
+	}
+	
+	@Test
+	public void testHome() throws Exception {
+		this.mockMvc.perform(get("/product/getAll")).andExpect(status().isOk()); 
+	}
+
 
 }
