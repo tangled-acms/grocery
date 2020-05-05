@@ -101,6 +101,8 @@ public class BillingDetailsService {
 
 	/**
 	 * Function to delete an object in Billing Details Table
+	 * Additional Functionality-
+	 * Increases product quantity when any billing detail is deleted.
 	 * 
 	 * @param embeddedId
 	 *            Contains the composite key pair for a single record
@@ -108,8 +110,12 @@ public class BillingDetailsService {
 	 * @throws ResourceNotFoundException
 	 */
 	public String deleteBillingDetailsRecord(BillingDetailsEmbeddedId embeddedId) throws ResourceNotFoundException {
+		String productId = embeddedId.getProductId();
+		Product product = productService.getByProductId(productId);
 		BillingDetails objectToDelete = this.billingDetailsRepository.findById(embeddedId).orElseThrow(
 				() -> new ResourceNotFoundException("Bill with ID " + embeddedId.toString() + " not found!"));
+		product.setQuantity(product.getQuantity()+objectToDelete.getQuantity());
+		productService.updateProductDetails(productId, product);
 		this.billingDetailsRepository.delete(objectToDelete);
 		return embeddedId.toString();
 

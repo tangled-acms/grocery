@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,13 +43,26 @@ public class ProductRetailerController {
 	 * @throws ResourceNotFoundException
 	 *             If given Id does not exist
 	 */
-	@GetMapping("/productretailer/getByProductRetailerId")
-	public List<ProductRetailer> getByProductId(@RequestBody ProductRetailerEmbeddedId embeddedId)
+	@GetMapping("/productretailer/getByProductId/{id}")
+	public List<ProductRetailer> getByProductId(@PathVariable(value = "id") String productId)
 			throws ResourceNotFoundException {
-		if (embeddedId.getProductId() != null)
-			return this.productRetailerService.getByProductId(embeddedId.getProductId());
-		else
-			return this.productRetailerService.getByRetailerId(embeddedId.getRetailerId());
+			return this.productRetailerService.getByProductId(productId);
+	}
+	
+	/**
+	 * Retrieves the records in productretailer table with the given retailerId.
+	 * METHOD = Get.
+	 * 
+	 * @param retailerId
+	 *            Id of the requried record.
+	 * @return List of all the records which contain that productId.
+	 * @throws ResourceNotFoundException
+	 *             If given Id does not exist
+	 */
+	@GetMapping("/productretailer/getByRetailerId/{id}")
+	public List<ProductRetailer> getByRetailerId(@PathVariable(value = "id") String retailerId)
+			throws ResourceNotFoundException {
+			return this.productRetailerService.getByRetailerId(retailerId);
 	}
 
 	/**
