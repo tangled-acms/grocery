@@ -17,12 +17,24 @@ public class RetailerService {
 	@Autowired
 	private RetailerRepository retailerRepository;
 
+	/**
+	 * Function to retrieve all records in Retailer Table
+	 * 
+	 * @return List of all records in Retailer Table
+	 */
 	public List<Retailer> getAllRetailerDetails() {
-
 		return this.retailerRepository.findAll();
 
 	}
 
+	/**
+	 * Function to retrieve a single record in Retailer Table
+	 * 
+	 * @param retailerId
+	 *            Id of the required record
+	 * @return Object with given ID of all records in Retailer Table
+	 * @throws ResourceNotFoundException
+	 */
 	public Retailer getByRetailerId(String retailerId) throws ResourceNotFoundException {
 		Retailer retailer = this.retailerRepository.findById(retailerId)
 				.orElseThrow(() -> new ResourceNotFoundException("Retailer with ID " + retailerId + " not found!"));
@@ -30,11 +42,29 @@ public class RetailerService {
 
 	}
 
+	/**
+	 * Function to save an object to Retailer Table
+	 * 
+	 * @param retailer
+	 *            An object with details of Retailer Table
+	 * @return Object that is saved
+	 */
 	public Retailer postDataToRetailerTable(Retailer retailer) {
 		return this.retailerRepository.save(retailer);
 	}
 
-	public Retailer updateRetailerDetails(String retailerId, Retailer retailerdetails) throws ResourceNotFoundException {
+	/**
+	 * Function to Update an object in Retailer Table
+	 * 
+	 * @param retailerId
+	 *            Id of the required record
+	 * @param retailerdetails
+	 *            An object with new details of Retailer Table
+	 * @return Object that is updated and saved
+	 * @throws ResourceNotFoundException
+	 */
+	public Retailer updateRetailerDetails(String retailerId, Retailer retailerdetails)
+			throws ResourceNotFoundException {
 		Retailer retailer = this.retailerRepository.findById(retailerId)
 				.orElseThrow(() -> new ResourceNotFoundException("Retailer with ID " + retailerId + " not found!"));
 		retailer.setName(retailerdetails.getName());
@@ -47,6 +77,14 @@ public class RetailerService {
 		return this.retailerRepository.save(retailer);
 	}
 
+	/**
+	 * Function to delete an object in Retailer Table
+	 * 
+	 * @param retailerId
+	 *            Id of the required record
+	 * @return retailerId of deleted record
+	 * @throws ResourceNotFoundException
+	 */
 	public String deleteRetailerReecord(String retailerId) throws ResourceNotFoundException {
 		Retailer retailer = this.retailerRepository.findById(retailerId)
 				.orElseThrow(() -> new ResourceNotFoundException("Retailer with ID " + retailerId + " not found!"));

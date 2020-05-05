@@ -24,9 +24,8 @@ public class RetailerController {
 	private RetailerService retailerService;
 
 	/**
-	 * Retrieves all the records in retailer table. 
-	 * METHOD = Get. 
-	 * @param null.
+	 * Retrieves all the records in retailer table. METHOD = Get.
+	 * 
 	 * @return List of all the records.
 	 */
 	@GetMapping("/retailer/getAll")
@@ -36,21 +35,24 @@ public class RetailerController {
 	}
 
 	/**
-	 * Retrieves one record from retailer table. 
-	 * METHOD = Get. 
-	 * @param retailerID of the required details. 
+	 * Retrieves one record from retailer table. METHOD = Get.
+	 * 
+	 * @param retailerId
+	 *            Id of the required details.
 	 * @return Object containing all the details of that retailer.
-	 * @exception throws user defined exception ResourceNotFoundException if given Id does not exist
+	 * @throws ResourceNotFoundException
+	 *             If given Id does not exist
 	 */
 	@GetMapping("/retailer/getById/{id}")
 	public Retailer getByRetailerId(@PathVariable(value = "id") String retailerId) throws ResourceNotFoundException {
 		return this.retailerService.getByRetailerId(retailerId);
 	}
 
-	/*
-	 * Saves data in the retailer table. 
-	 * METHOD = Post. 
-	 * @param Object containing all the details of the attributes. 
+	/**
+	 * Saves data in the retailer table. METHOD = Post.
+	 * 
+	 * @param retailer
+	 *            Object containing all the details of the attributes.
 	 * @return retailerID of the new record.
 	 */
 	@PostMapping("/retailer/save")
@@ -59,27 +61,34 @@ public class RetailerController {
 	}
 
 	/**
-	 * Updates data in the retailer table. 
-	 * METHOD = Put. 
-	 * @param Object containing all the details of the attributes. 
+	 * Updates data in the retailer table. METHOD = Put.
+	 * 
+	 * @param retailerId
+	 *            Id of the required details.
+	 * @param retailerDetails
+	 *            Object containing all the details of the attributes.
 	 * @return retailerID of the updated record.
-	 * @exception throws user defined exception ResourceNotFoundException if given Id does not exist
+	 * @throws ResourceNotFoundException
+	 *             If given Id does not exist
 	 */
 	@PutMapping("/retailer/update/{id}")
-	public Retailer updateRetailerDetails(@PathVariable(value = "id") String retailerId, @Valid @RequestBody Retailer retailerDetails)
-			throws ResourceNotFoundException {
+	public Retailer updateRetailerDetails(@PathVariable(value = "id") String retailerId,
+			@Valid @RequestBody Retailer retailerDetails) throws ResourceNotFoundException {
 		return this.retailerService.updateRetailerDetails(retailerId, retailerDetails);
 	}
 
 	/**
-	 * Deletes data in the retailer table. 
-	 * METHOD = Delete 
-	 * @param Object containing retailerID of record that should be deleted. 
+	 * Deletes data in the retailer table. METHOD = Delete
+	 * 
+	 * @param retailerId
+	 *            Object containing retailerID of record that should be deleted.
 	 * @return retailerID of the deleted record.
-	 * @exception throws user defined exception ResourceNotFoundException if given Id does not exist
+	 * @throws ResourceNotFoundException
+	 *             If given Id does not exist
 	 */
 	@DeleteMapping("/retailer/delete/{id}")
-	public String deleteRetailerReecord(@PathVariable(value = "id") String retailerId) throws ResourceNotFoundException {
+	public String deleteRetailerReecord(@PathVariable(value = "id") String retailerId)
+			throws ResourceNotFoundException {
 		return this.retailerService.deleteRetailerReecord(retailerId);
 	}
 
