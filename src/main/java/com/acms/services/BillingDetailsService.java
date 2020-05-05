@@ -39,8 +39,13 @@ public class BillingDetailsService {
 	}
 
 	public BillingDetails postDataToBillingDetails(BillingDetails billingDetails) throws ResourceNotFoundException {
-		Product product = productService.getByProductId(billingDetails.getBillingDetailsEmbeddedId().getProductId());
-		billingDetails.setCost(((product.getMRP())-((product.getPromotion()/100)*product.getMRP()))*(billingDetails.getQuantity()));
+		String productId = billingDetails.getBillingDetailsEmbeddedId().getProductId();
+		Product product = productService.getByProductId(productId);
+		billingDetails.setCost(((product.getMRP()) - ((product.getPromotion() / 100) * product.getMRP()))
+				* (billingDetails.getQuantity()));
+		int quantity = product.getQuantity();
+		product.setQuantity((quantity - billingDetails.getQuantity()));
+		productService.updateProductDetails(productId, product);
 		return this.billingDetailsRepository.save(billingDetails);
 	}
 
