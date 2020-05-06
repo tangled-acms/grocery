@@ -111,7 +111,7 @@ public class ProductRetailerService {
 	}
 	
 	/**
-	 * Function to delete an object in ProductRetailer Table
+	 * Function to delete an object in ProductRetailer Table.
 	 * 
 	 * @param embeddedId
 	 *            Contains the composite key pair for a single record
