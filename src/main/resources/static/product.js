@@ -20,7 +20,7 @@ $(document).ready(function()
 
         alert('new button clicked - ' + column_count + ' - ' + product_row_count);
 
-        $('#Product_table').append('<tr id="row_' + (product_row_count) + '">' +
+        $('#Product_table').append('<tr id="row_' + (product_row_count) + '" class="row">' +
                                     '<th><input type="radio" class="select_product" name="select_product" id="' + (product_row_count) + '"/></th>' +
                                     '<th class="sl_no">' + product_row_count + '</th>' +
                                     '<td id="p_id_' + product_row_count + '"><input type= "text" required id="p_id_' + product_row_count + '_inp"></td>' +
@@ -94,7 +94,7 @@ $(document).ready(function()
     			//alert(result);
     			
     			$("#Product_table").empty();
-    			$("#Product_table").append('<tr id="prod_tab_heading">' + 
+    			$("#Product_table").append('<tr id="prod_tab_heading" class="row header">' + 
     									'<th></th>' +
     									'<th>Sl. No</th>' +
     									'<th>Product ID</th>' +
@@ -108,7 +108,7 @@ $(document).ready(function()
     					{
     						product_row_count++;
     				
-    						var Product_row = '<tr id="row_' + (product_row_count) + '">' +
+    						var Product_row = '<tr id="row_' + (product_row_count) + '" class="row">' +
                             '<th><input type="radio" class="select_product" name="select_product" id="' + (product_row_count) + '"/></th>' +
                             '<th class="sl_no">' + product_row_count + '</th>' +
                             '<td id="p_id_' + (product_row_count) + '">' + product.productId + '</td>' +

@@ -28,7 +28,7 @@ $(document).ready(function()
             column_count++;
         });
 		
-		$('#Prod_Ret_table').append('<tr id="row_' + (prod_ret_row_count) + '">' +
+		$('#Prod_Ret_table').append('<tr id="row_' + (prod_ret_row_count) + '" class="row">' +
                 '<th><input type="radio" class="select_prod_ret" name="select_prod_ret" id="pr_' + (prod_ret_row_count) + '"/></th>' +
                 '<th class="sl_no">' + prod_ret_row_count + '</th>' +
                 '<td id="pr_pid_' + prod_ret_row_count + '"><input type= "text" required id="pr_pid_' + prod_ret_row_count + '_inp"/></td>' +
@@ -199,7 +199,7 @@ $(document).ready(function()
 	{
 		prod_ret_row_count = 0;
 		$("#Prod_Ret_table").empty();
-		$("#Prod_Ret_table").append('<tr id="prodret_tab_heading">' + 
+		$("#Prod_Ret_table").append('<tr id="prodret_tab_heading" class="row header">' + 
 								'<th></th>' +
 								'<th>Sl. No</th>' +
 								'<th>Product ID</th>' +
@@ -211,7 +211,7 @@ $(document).ready(function()
 				{
 					prod_ret_row_count++;
 			
-					var Prod_ret_row = '<tr id="row_' + (prod_ret_row_count) + '">' +
+					var Prod_ret_row = '<tr id="row_' + (prod_ret_row_count) + '" class="row">' +
                     '<th><input type="radio" class="select_prod_ret" name="select_prod_ret" id="' + (prod_ret_row_count) + '"/></th>' +
                     '<th class="sl_no">' + prod_ret_row_count + '</th>' +
                     '<td id="pr_pid_' + (prod_ret_row_count) + '">' + prod_ret.productId + '</td>' +

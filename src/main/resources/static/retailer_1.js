@@ -21,7 +21,7 @@ $(document).ready(function()
 
         alert('new retailer button clicked - ' + column_count + ' - ' + retailer_row_count);
 
-        $('#Retailer_table').append('<tr id="row_' + (retailer_row_count) + '">' +
+        $('#Retailer_table').append('<tr id="row_' + (retailer_row_count) + '" class="row">' +
                                     '<th><input type="radio" class="select_retailer" name="select_retailer" id="' + (retailer_row_count) + '"/></th>' +
                                     '<th class="sl_no">' + retailer_row_count + '</th>' +
                                     '<td><input type= "text" required id="r_id'+ retailer_row_count +'_inp"></td>' +
@@ -99,7 +99,7 @@ $(document).ready(function()
     			alert(retailer_result);
     			
     			$("#Retailer_table").empty();
-    			$("#Retailer_table").append('<tr id="retailer_tab_heading">' + 
+    			$("#Retailer_table").append('<tr id="retailer_tab_heading" class="row header">' + 
     									'<th></th>' +
     									'<th>Sl. No</th>' +
     									'<th>Retailer ID</th>' +
@@ -116,7 +116,7 @@ $(document).ready(function()
     					{
     						retailer_row_count++;
     				
-    						var Retailer_row = '<tr id="ret_row_' + (retailer_row_count) + '">' +
+    						var Retailer_row = '<tr id="ret_row_' + (retailer_row_count) + '" class="row">' +
                             '<th><input type="radio" class="select_retailer" name="select_retailer" id="' + (retailer_row_count) + '"/></th>' +
                             '<th class="sl_no">' + retailer_row_count + '</th>' +
                             '<td id="r_id_' + (retailer_row_count) + '">' + retailer.retailerId + '</td>' +
