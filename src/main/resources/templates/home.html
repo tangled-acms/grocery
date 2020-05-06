@@ -1,24 +1,135 @@
 <html>
-    <script type="text/javascript" src="/jquery-1.7.1.min.js"></script> 
-    <script type="text/javascript" src="/product.js"></script>
-    <script type="text/javascript" src="/billing.js"></script>
-    <script type="text/javascript" src="/retailer_1.js"></script>
-    <script type="text/javascript" src="/productretailer.js"></script>
 
     <head>
-        <style>
-        table, th, td {
-            border: 1px solid black;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 5px;
-            text-align: center;
-        }
-        </style>
+        <script type="text/javascript" src="/jquery-1.7.1.min.js"></script> 
+	    <script type="text/javascript" src="/product.js"></script>
+	    <script type="text/javascript" src="/billing.js"></script>
+	    <script type="text/javascript" src="/retailer_1.js"></script>
+	    <script type="text/javascript" src="/productretailer.js"></script>
+	    <link rel="stylesheet" type="text/css" href="/styling.css">
     </head>
-
+    
+    
     <body>
+	<div class="header">
+		<h2>Grocery Store Management System</h2>
+	</div>
+
+	<h2>Products Table</h2>
+	<p>All the products available at the store along with some details.</p>
+
+	<div class="container-table100">
+		<div class="wrap-table100">
+			<div class="table">
+				<table id="Product_table">
+
+					<tr id="prod_tab_heading" class="row header">
+						<th></th>
+						<th>Sl. No</th>
+						<th>Product ID</th>
+						<th>Product Name</th>
+						<th>Description</th>
+						<th>Quantity Available</th>
+						<th>Cost per unit</th>
+						<th>Promotion(%)</th>
+					</tr>
+
+
+
+				</table>
+			</div>
+		</div>
+	</div>
+	<br>
+	<button id="new_prod">Add new Product</button>
+	<button id="delete_prod">Delete Product</button>
+	<button id="modify_prod">Modify Product</button>
+
+	<div id="insert_button"></div>
+
+
+	<h2>Retailer Table</h2>
+	<p>All the retailers that supply products to the store along with
+		some personal information.</p>
+
+	<div class="container-table100">
+		<div class="wrap-table100">
+			<div class="table">
+				<table id="Retailer_table">
+
+					<tr id="retailer_tab_heading" class="row header">
+						<th></th>
+						<th>Sl. No</th>
+						<th>Retailer ID</th>
+						<th>Retailer Name</th>
+						<th>Contact No 1</th>
+						<th>Contact No 2</th>
+						<th>Contact No 3</th>
+						<th>Address 1</th>
+						<th>Address 2</th>
+						<th>Address 3</th>
+					</tr>
+
+
+				</table>
+			</div>
+		</div>
+	</div>
+	<br>
+	<button id="new_retailer">Add new Retailer</button>
+	<button id="delete_retailer">Delete Retailer</button>
+	<button id="modify_retailer">Modify Retailer</button>
+
+	<div id="insert_button2"></div>
+
+	<h2>Product - Retailer Table</h2>
+	<p>Information about the relation between each retailer and the
+		products supplied by him.</p>
+	<div class="container-table100">
+		<div class="wrap-table100">
+			<div class="table">
+				<table id="Prod_Ret_table">
+
+					<tr id="prod_ret_tab_heading" class="row header">
+						<th></th>
+						<th>Sl. No</th>
+						<th>Product ID</th>
+						<th>Retailer ID</th>
+						<th>Time Stamp</th>
+						<th>Quantity</th>
+						<th>Cost</th>
+					</tr>
+
+
+				</table>
+			</div>
+		</div>
+	</div>
+	<br>
+	<button id="new_prod_ret">Add new Row</button>
+	<button id="modify_prod_ret">Modify Row</button>
+	<button id="find_retailer">SEARCH</button>
+	<button id="get_all">Display All</button>
+
+	<div id="insert_button3"></div>
+
+	<div id="display_bill">
+
+		<button id="create_bill">NEW BILL</button>
+
+		<div id="bill_details"></div>
+
+		<table id="Bill_table">
+
+		</table>
+
+		<div id="bill_final_options"></div>
+	</div>
+</body>
+    
+    
+
+   <!-- <body>
 
         <h2>Products Table</h2>
         <p>All the products available at the store along with some details.</p>
@@ -35,8 +146,6 @@
             <th>Cost per unit</th>
             <th>Promotion(%)</th>
         </tr>
-
-       
 
         </table>
 
@@ -100,10 +209,10 @@
         </table>
 
 		<br>
-        <button id="new_prod_ret">Add new Row</button>
-        <button id="modify_prod_ret">Modify Row</button>
-        <button id="find_retailer">SEARCH</button>
-        <button id="get_all">Display All</button>
+        <button id="new_prod_ret" class="button">Add new Row</button>
+        <button id="modify_prod_ret" class="button">Modify Row</button>
+        <button id="find_retailer" class="button">Search for Product / Retailer</button>
+        <button id="get_all" class="button">Display All</button>
 
         <div id="insert_button3">
             
@@ -123,5 +232,5 @@
             </div>
         </div>
 
-    </body>
+    </body>-->
 </html>

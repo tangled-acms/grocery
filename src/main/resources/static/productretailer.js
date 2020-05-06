@@ -20,7 +20,7 @@ $(document).ready(function()
     	});
     }
 	
-	$("#new_prod_ret").click(function()
+	$("#new_prod_ret.button").click(function()
 	{
 		prod_ret_row_count = $('#Prod_Ret_table tr').length;
 		
@@ -76,7 +76,7 @@ $(document).ready(function()
 	});
 	
 	
-	$('#modify_prod_ret').click(function()
+	$('#modify_prod_ret.button').click(function()
     {
         disable_buttons_prod_ret();
         enable_radio_prod_ret();
@@ -139,7 +139,7 @@ $(document).ready(function()
     	disable_radio_prod_ret();
 	});
 	
-	$("#find_retailer").click(function()
+	$("#find_retailer.button").click(function()
 	{
 		alert("button clicked");
 		$("#insert_button3").html("<input type='text' required placeholder='Enter product ID' id='find_by_pid_inp'/><br>" +
@@ -224,7 +224,7 @@ $(document).ready(function()
 				});
 	}
 	
-	$("#get_all").click(function()
+	$("#get_all.button").click(function()
 	{
 		ajaxGetAllProductRetailer();
 	});
