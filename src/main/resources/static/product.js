@@ -57,15 +57,15 @@ $(document).ready(function()
     function ajaxProductPost()
     {
     	var ProductData = {
-    			productId : $('#p_id_' + product_row_count).val(),
-    			name : $('#p_name' + product_row_count).val(),
-    			description : $('#p_descrp' + product_row_count).val(),
-    			quantity : $('#qty' + product_row_count).val(),
-    			MRP : $('#cost' + product_row_count).val(),
-    			promotion : $('#prom' + product_row_count).val()
+    			productId : $('#p_id_' + product_row_count + '_inp').val(),
+    			name : $('#p_name' + product_row_count + '_inp').val(),
+    			description : $('#p_descrp' + product_row_count + '_inp').val(),
+    			quantity : $('#qty' + product_row_count + '_inp').val(),
+    			mrp : $('#cost' + product_row_count + '_inp').val(),
+    			promotion : $('#prom' + product_row_count + '_inp').val()
     	}
     	
-    	alert(ProductData.productId + ' ' + ProductData.MRP);
+    	alert(ProductData.productId + ' ' + ProductData.mrp);
     	
     	$.ajax({
     		type : "POST",
@@ -76,6 +76,7 @@ $(document).ready(function()
     		success : function(result)
     		{
     			alert("Data successfully added - " + result.productId);
+    			ajaxProductGetAll();
     		}
     		
     	});
@@ -83,7 +84,7 @@ $(document).ready(function()
     
     function ajaxProductGetAll()
     {
-    	alert("Get all called!");
+    	//alert("Get all called!");
     	$.ajax({
     		type : "GET",
     		contentType : "application/json",
@@ -114,7 +115,7 @@ $(document).ready(function()
                             '<td id="p_name' + (product_row_count) + '">' + product.name + '</td>' +
                             '<td id="p_descrp' + (product_row_count) + '">' + product.description + '</td>' +
                             '<td id="qty' + (product_row_count) + '">' + product.quantity + '</td>' +
-                            '<td id="cost' + (product_row_count) + '">' + product.MRP + '</td>' +
+                            '<td id="cost' + (product_row_count) + '">' + product.mrp + '</td>' +
                             '<td id="prom' + (product_row_count) + '">' + product.promotion + '</td>' +
                             '</tr>';
     						
@@ -142,7 +143,7 @@ $(document).ready(function()
                     var OriginalContent = $(this).text();
                     var elementId = $(this).attr('id');
                     
-                    alert(elementId);
+                    console.log(OriginalContent);
                     
                     if($.isNumeric(OriginalContent))
                         $(this).html('<input type= "number" required id="' + elementId + '_inp" value="' + OriginalContent + '">');
@@ -167,11 +168,12 @@ $(document).ready(function()
     			name : $('#p_name' + product_row_count + '_inp').val(),
     			description : $('#p_descrp' + product_row_count + '_inp').val(),
     			quantity : $('#qty' + product_row_count + '_inp').val(),
-    			MRP : $('#cost' + product_row_count + '_inp').val(),
+    			mrp : $('#cost' + product_row_count + '_inp').val(),
     			promotion : $('#prom' + product_row_count + '_inp').val()
     	}
     	
-    	alert(ProductData.productId + ' ' + ProductData.MRP);
+    	alert(ProductData.productId + ' ' + ProductData.mrp);
+    	console.log(ProductData);
     	
     	$.ajax({
     		type : "PUT",
@@ -182,6 +184,7 @@ $(document).ready(function()
     		success : function(result)
     		{
     			alert("Data successfully updated - " + result.productId);
+    			ajaxProductGetAll();
     		}
     		
     	});
@@ -234,7 +237,8 @@ $(document).ready(function()
     		success : function(result)
     		{
     			alert("Data successfully updated - " + result);
-    			$('#' + row_id).remove();
+    			ajaxProductGetAll();
+    			//$('#' + row_id).remove();
     		}
     		
     	});
@@ -276,6 +280,7 @@ $(document).ready(function()
         $('.select_product').each(function()
         {
             $(this).attr('disabled', false);
+            $(this).attr('checked', false);
         });
     }
 
@@ -308,6 +313,7 @@ $(document).ready(function()
         $('.select_retailer').each(function()
         {
             $(this).attr('disabled', false);
+            $(this).attr('checked', false);
         });
     }
     

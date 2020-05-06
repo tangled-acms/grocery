@@ -76,6 +76,7 @@ public class ProductController {
 	@PutMapping("/product/update/{id}")
 	public Product updateProductDetails(@PathVariable(value = "id") String productId,
 			@Valid @RequestBody Product productDetails) throws ResourceNotFoundException {
+		System.out.println(productDetails);
 		return this.productService.updateProductDetails(productId, productDetails);
 
 	}

@@ -5,7 +5,7 @@ $(document).ready(function()
 	
 	function ajaxGetAllProductRetailer()
     {
-    	alert("ProdRet Get all called!");
+    	//alert("ProdRet Get all called!");
     	$.ajax({
     		type : "GET",
     		contentType : "application/json",
@@ -13,31 +13,8 @@ $(document).ready(function()
     		success : function(result)
     		{
     			//alert(result);
+    			display_prod_ret_table(result);
     			
-    			$("#Prod_Ret_table").empty();
-    			$("#Prod_Ret_table").append('<tr id="prodret_tab_heading">' + 
-    									'<th></th>' +
-    									'<th>Sl. No</th>' +
-    									'<th>Product ID</th>' +
-    									'<th>Retailer ID</th>' + 
-    									'<th>Quantity</th>' +
-    									'<th>Cost per unit</th>' +
-    									'</tr>');
-    			$(result).each(function(i, product)
-    					{
-    						prod_ret_row_count++;
-    				
-    						var Prod_ret_row = '<tr id="row_' + (prod_ret_row_count) + '">' +
-                            '<th><input type="radio" class="select_product" name="select_product" id="' + (prod_ret_row_count) + '"/></th>' +
-                            '<th class="sl_no">' + prod_ret_row_count + '</th>' +
-                            '<td id="pr_pid_' + (prod_ret_row_count) + '">' + product.productId + '</td>' +
-                            '<td id="pr_rid' + (prod_ret_row_count) + '">' + product.retailerId + '</td>' +
-                            '<td id="pr_qty' + (prod_ret_row_count) + '">' + product.quantity + '</td>' +
-                            '<td id="pr_cost' + (prod_ret_row_count) + '">' + product.cost + '</td>' +
-                            '</tr>';
-    						
-    						$("#Prod_Ret_table").append(Prod_ret_row);
-    					});
     		}
     	
     	});
@@ -52,7 +29,7 @@ $(document).ready(function()
         });
 		
 		$('#Prod_Ret_table').append('<tr id="row_' + (prod_ret_row_count) + '">' +
-                '<th><input type="radio" class="select_prod_ret" name="select_prodret" id="pr_' + (prod_ret_row_count) + '"/></th>' +
+                '<th><input type="radio" class="select_prod_ret" name="select_prod_ret" id="pr_' + (prod_ret_row_count) + '"/></th>' +
                 '<th class="sl_no">' + prod_ret_row_count + '</th>' +
                 '<td id="pr_pid_' + prod_ret_row_count + '"><input type= "text" required id="pr_pid_' + prod_ret_row_count + '_inp"/></td>' +
                 '<td id="pr_rid' + prod_ret_row_count + '"><input type= "text" required id="pr_rid' + prod_ret_row_count + '_inp"/></td>' +
@@ -88,21 +65,16 @@ $(document).ready(function()
     		success : function(result)
     		{
     			alert("Data successfully added to prodret - " + result.productId);
+    			ajaxGetAllProductRetailer();
     		}
     		
     	});
     	
-    	$('input[type!=radio]').each(function () 
-    	        {
-    	            //need to send data to database also
-    	            var value = $(this).val();
-    	            $(this).replaceWith(value);
-    	        });
-
     	        enable_buttons_prod_ret();
     	        disable_radio_prod_ret();
     	        $('#insert_button3').html('');
 	});
+	
 	
 	$('#modify_prod_ret').click(function()
     {
@@ -112,17 +84,20 @@ $(document).ready(function()
         $('#Prod_Ret_table input').on('change', function()
         {
         	alert("change detected");
-            var radioValue = $("input[name='select_prodret']:checked").attr('id');
+            var radioValue = $("input[name='select_prod_ret']:checked").attr('id');
             alert("Selected row - " + radioValue);
+            prod_ret_row_count = radioValue;
             if(radioValue){
-                alert("Selected row - " + radioValue);
+                //alert("Selected row - " + radioValue);
                 $(this).parents('tr').find('td').each(function()
                 {
                     var OriginalContent = $(this).text();
+                    var elementId = $(this).attr('id');
                     //alert(jQuery.type(OriginalContent) + ' - ' + $.isNumeric(OriginalContent));
+                    console.log(elementId + ' - ' + OriginalContent);
                     
                     if($.isNumeric(OriginalContent))
-                        $(this).html("<input type='number' value='" + OriginalContent + "' required id='" + elementId + "_inp' />")
+                        $(this).html("<input type='number' value='" + OriginalContent + "' required id='" + elementId + "_inp' />");
                     else
                         $(this).html("<input type='text' value='" + OriginalContent + "' required id='" + elementId + "_inp' />");
                 });
@@ -131,6 +106,7 @@ $(document).ready(function()
             }
         });   
    });
+	
 	
 	$("#prodret_modify_done").live('click', function()
 	{
@@ -142,6 +118,115 @@ $(document).ready(function()
     	}
 		
 		console.log(ProdRetData);
+		
+		$.ajax({
+    		type : "PUT",
+    		contentType : "application/json",
+    		url : "/productretailer/update",
+    		data : JSON.stringify(ProdRetData),
+    		dataType : "json",
+    		success : function(retailer_result)
+    		{
+    			alert("Data successfully updated - " + retailer_result.retailerId);
+    			ajaxGetAllProductRetailer();
+    		}
+    		
+    	});
+
+    	$('#insert_button3').html('');
+    	
+    	enable_buttons_prod_ret();
+    	disable_radio_prod_ret();
+	});
+	
+	$("#find_retailer").click(function()
+	{
+		alert("button clicked");
+		$("#insert_button3").html("<input type='text' required placeholder='Enter product ID' id='find_by_pid_inp'/><br>" +
+									"<input type='text' required placeholder='Enter retailer ID' id='find_by_rid_inp'/><br>" +
+									"<button id='find_by_pid'>SEARCH</button>");
+	});
+	
+	$("#find_by_pid").live('click', function()
+	{
+		var pid = $("#find_by_pid_inp").val();
+		if(pid)
+		{
+			/*var ProdRetData = {
+					productId : pid
+			}*/
+			
+			$.ajax({
+	    		type : "GET",
+	    		contentType : "application/json",
+	    		url : "/productretailer/getByProductId/" + pid,
+	    		success : function(retailer_result)
+	    		{
+	    			console.log("Data successfully read - " + retailer_result);
+	    			display_prod_ret_table(retailer_result);
+	    			$("#find_by_pid_inp").html("<input type='text' required placeholder='Enter product ID' id='find_by_pid_inp'/><br>");
+	    		}
+	    		
+	    	});
+		}
+			
+		var rid = $("#find_by_rid_inp").val();
+		if(rid)
+		{
+			
+			console.log(rid);
+			
+			$.ajax({
+	    		type : "GET",
+	    		contentType : "application/json",
+	    		url : "/productretailer/getByRetailerId/" + rid,
+	    		success : function(retailer_result)
+	    		{
+	    			console.log("Data successfully read - " + retailer_result);
+	    			display_prod_ret_table(retailer_result);
+	    			
+	    			$("#find_by_rid_inp").html("<input type='text' required placeholder='Enter retailer ID' id='find_by_rid_inp'/><br>");
+	    			//ajaxGetAllProductRetailer();
+	    		}
+	    		
+	    	});
+		}
+		
+	});
+	
+	
+	function display_prod_ret_table(result)
+	{
+		prod_ret_row_count = 0;
+		$("#Prod_Ret_table").empty();
+		$("#Prod_Ret_table").append('<tr id="prodret_tab_heading">' + 
+								'<th></th>' +
+								'<th>Sl. No</th>' +
+								'<th>Product ID</th>' +
+								'<th>Retailer ID</th>' + 
+								'<th>Quantity</th>' +
+								'<th>Cost per unit</th>' +
+								'</tr>');
+		$(result).each(function(i, prod_ret)
+				{
+					prod_ret_row_count++;
+			
+					var Prod_ret_row = '<tr id="row_' + (prod_ret_row_count) + '">' +
+                    '<th><input type="radio" class="select_prod_ret" name="select_prod_ret" id="' + (prod_ret_row_count) + '"/></th>' +
+                    '<th class="sl_no">' + prod_ret_row_count + '</th>' +
+                    '<td id="pr_pid_' + (prod_ret_row_count) + '">' + prod_ret.productId + '</td>' +
+                    '<td id="pr_rid' + (prod_ret_row_count) + '">' + prod_ret.retailerId + '</td>' +
+                    '<td id="pr_qty' + (prod_ret_row_count) + '">' + prod_ret.quantity + '</td>' +
+                    '<td id="pr_cost' + (prod_ret_row_count) + '">' + prod_ret.cost + '</td>' +
+                    '</tr>';
+					
+					$("#Prod_Ret_table").append(Prod_ret_row);
+				});
+	}
+	
+	$("#get_all").click(function()
+	{
+		ajaxGetAllProductRetailer();
 	});
 	
 	function disable_buttons_prod_ret()
@@ -158,7 +243,7 @@ $(document).ready(function()
 
     function disable_radio_prod_ret()
     {
-        $('.select_prodret').each(function()
+        $('.select_prod_ret').each(function()
         {
             $(this).attr('disabled', true);
             $(this).attr('checked', false);
@@ -167,9 +252,10 @@ $(document).ready(function()
 
     function enable_radio_prod_ret()
     {
-        $('.select_prodret').each(function()
+        $('.select_prod_ret').each(function()
         {
             $(this).attr('disabled', false);
+            $(this).attr('checked', false);
         });
     }
 });
