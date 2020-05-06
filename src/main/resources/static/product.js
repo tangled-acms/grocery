@@ -33,7 +33,7 @@ $(document).ready(function()
         
         disable_buttons_product();
 
-        $('#insert_button').html('<button id="product_add_done">DONE</button>');
+        $('#insert_button').html('<button id="product_add_done" class="done button">DONE</button>');
     });       
 
     $('#product_add_done').live('click', function()
@@ -93,6 +93,7 @@ $(document).ready(function()
     		{
     			//alert(result);
     			
+    			product_row_count = 0;
     			$("#Product_table").empty();
     			$("#Product_table").append('<tr id="prod_tab_heading" class="row header">' + 
     									'<th></th>' +
@@ -151,7 +152,7 @@ $(document).ready(function()
                         $(this).html('<input type= "text" required id="' + elementId + '_inp" value="' + OriginalContent + '">');
                 });
 
-                $('#insert_button').html('<button id="product_modify_done">DONE</button>');
+                $('#insert_button').html('<button id="product_modify_done" class="done button">DONE</button>');
             }
         });
 
@@ -217,7 +218,7 @@ $(document).ready(function()
                 else
                     enable_product_radio();
 			}
-		$('#insert_button').html('<button id="delete_done">DONE</button>');	
+		$('#insert_button').html('<button id="delete_done" class="done button">DONE</button>');	
 		});
     });
     
@@ -257,6 +258,9 @@ $(document).ready(function()
         $('#new_prod').attr('disabled', true);
         $('#delete_prod').attr('disabled', true);
         $('#modify_prod').attr('disabled', true);
+        
+        $('.button').removeClass('enable_button');
+        $('.button').addClass('disable_button');
     }
 
     function enable_buttons_product()
@@ -264,6 +268,9 @@ $(document).ready(function()
         $('#new_prod').attr('disabled', false);
         $('#delete_prod').attr('disabled', false);
         $('#modify_prod').attr('disabled', false);
+
+        $('.button').removeClass('disable_button');
+        $('.button').addClass('enable_button');
     }
 
     function disable_radio_product()

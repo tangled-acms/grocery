@@ -39,7 +39,7 @@ $(document).ready(function()
 		
 		disable_buttons_prod_ret();
 		
-		 $('#insert_button3').html('<button id="prodret_add_done">DONE</button>');
+		 $('#insert_button3').html('<button id="prodret_add_done" class="done button">DONE</button>');
 	});
 	
 	$("#prodret_add_done").live('click', function()
@@ -65,13 +65,19 @@ $(document).ready(function()
     		success : function(result)
     		{
     			alert("Data successfully added to prodret - " + result.productId);
-    			ajaxGetAllProductRetailer();
+    			//ajaxGetAllProductRetailer();
+    			
+    			$('input[type!=radio]').each(function () 
+    	        {
+    	            var value = $(this).val();
+    	            $(this).replaceWith(value);
+    	        });
     		}
     		
     	});
     	
     	        enable_buttons_prod_ret();
-    	        disable_radio_prod_ret();
+    	        //disable_radio_prod_ret();
     	        $('#insert_button3').html('');
 	});
 	
@@ -79,7 +85,7 @@ $(document).ready(function()
 	$('#modify_prod_ret.button').click(function()
     {
         disable_buttons_prod_ret();
-        enable_radio_prod_ret();
+        //enable_radio_prod_ret();
 
         $('#Prod_Ret_table input').on('change', function()
         {
@@ -102,7 +108,7 @@ $(document).ready(function()
                         $(this).html("<input type='text' value='" + OriginalContent + "' required id='" + elementId + "_inp' />");
                 });
 
-                $('#insert_button3').html('<button id="prodret_modify_done">DONE</button>');
+                $('#insert_button3').html('<button id="prodret_modify_done" class="done button">DONE</button>');
             }
         });   
    });
@@ -128,7 +134,13 @@ $(document).ready(function()
     		success : function(retailer_result)
     		{
     			alert("Data successfully updated - " + retailer_result.retailerId);
-    			ajaxGetAllProductRetailer();
+    			//ajaxGetAllProductRetailer();
+    			
+    			$('input[type!=radio]').each(function () 
+    	    	        {
+    	    	            var value = $(this).val();
+    	    	            $(this).replaceWith(value);
+    	    	        });
     		}
     		
     	});
@@ -136,15 +148,15 @@ $(document).ready(function()
     	$('#insert_button3').html('');
     	
     	enable_buttons_prod_ret();
-    	disable_radio_prod_ret();
+    	//disable_radio_prod_ret();
 	});
 	
 	$("#find_retailer.button").click(function()
 	{
 		alert("button clicked");
-		$("#insert_button3").html("<input type='text' required placeholder='Enter product ID' id='find_by_pid_inp'/><br>" +
-									"<input type='text' required placeholder='Enter retailer ID' id='find_by_rid_inp'/><br>" +
-									"<button id='find_by_pid'>SEARCH</button>");
+		$("#insert_button3").html("<input type='text' required placeholder='Enter product ID' id='find_by_pid_inp' class='search_inp'/><br>" +
+									"<input type='text' required placeholder='Enter retailer ID' id='find_by_rid_inp' class='search_inp'/><br>" +
+									"<button id='find_by_pid' class='button done'>SEARCH</button>");
 	});
 	
 	$("#find_by_pid").live('click', function()
@@ -185,7 +197,7 @@ $(document).ready(function()
 	    			console.log("Data successfully read - " + retailer_result);
 	    			display_prod_ret_table(retailer_result);
 	    			
-	    			$("#find_by_rid_inp").html("<input type='text' required placeholder='Enter retailer ID' id='find_by_rid_inp'/><br>");
+	    			$("#find_by_rid_inp").html("<input type='text' required placeholder='Enter retailer ID' id='find_by_rid_inp' class='search_inp'/><br>");
 	    			//ajaxGetAllProductRetailer();
 	    		}
 	    		
@@ -233,12 +245,18 @@ $(document).ready(function()
     {
         $('#new_prod_ret').attr('disabled', true);
         $('#modify_prod_ret').attr('disabled', true);
+        
+        $('.button').removeClass('enable_button');
+        $('.button').addClass('disable_button');
     }
 
     function enable_buttons_prod_ret()
     {
         $('#new_prod_ret').attr('disabled', false);
         $('#modify_prod_ret').attr('disabled', false);
+
+        $('.button').removeClass('disable_button');
+        $('.button').addClass('enable_button');
     }
 
     function disable_radio_prod_ret()

@@ -4,9 +4,10 @@
 <script type="text/javascript" src="/billing.js"></script>
 <script type="text/javascript" src="/retailer_1.js"></script>
 <script type="text/javascript" src="/productretailer.js"></script>
+<link rel="stylesheet" type="text/css" href="/styling.css">
 
 <head>
-<style>
+<!-- <style>
 table, th, td {
 	border: 1px black;
 	border-collapse: collapse;
@@ -47,7 +48,7 @@ body {
 }
 
 .wrap-table100 {
-	width: 850px;
+	width: 1050px;
 	border-radius: 10px;
 	overflow: hidden;
 }
@@ -69,7 +70,7 @@ body {
 	background: #fff;
 }
 
-.row.header {
+.row, .header {
 	color: #ffffff;
 	background: #6c7ae0;
 }
@@ -102,7 +103,7 @@ body {
 		margin: 0;
 	}
 }
-</style>
+</style> -->
 </head>
 
 <body>
@@ -136,9 +137,11 @@ body {
 		</div>
 	</div>
 	<br>
-	<button id="new_prod">Add new Product</button>
-	<button id="delete_prod">Delete Product</button>
-	<button id="modify_prod">Modify Product</button>
+	<button id="new_prod" class="button">Add new Product</button>
+	<button id="delete_prod" class="button">Delete Product</button>
+	<button id="modify_prod" class="button">Modify Product</button>
+	
+	<br>
 
 	<div id="insert_button"></div>
 
@@ -171,9 +174,11 @@ body {
 		</div>
 	</div>
 	<br>
-	<button id="new_retailer">Add new Retailer</button>
-	<button id="delete_retailer">Delete Retailer</button>
-	<button id="modify_retailer">Modify Retailer</button>
+	<button id="new_retailer" class="button">Add new Retailer</button>
+	<button id="delete_retailer" class="button">Delete Retailer</button>
+	<button id="modify_retailer" class="button">Modify Retailer</button>
+	
+	<br>
 
 	<div id="insert_button2"></div>
 
@@ -201,22 +206,31 @@ body {
 		</div>
 	</div>
 	<br>
-	<button id="new_prod_ret">Add new Row</button>
-	<button id="modify_prod_ret">Modify Row</button>
-	<button id="find_retailer">SEARCH</button>
-	<button id="get_all">Display All</button>
+	<button id="new_prod_ret" class="button">Add new Row</button>
+	<button id="modify_prod_ret" class="button">Modify Row</button>
+	<button id="find_retailer" class="button">Search Product / Retailer</button>
+	<button id="get_all" class="button">Display All</button>
+	
+	<br>
 
 	<div id="insert_button3"></div>
 
+	<br>
 	<div id="display_bill">
 
-		<button id="create_bill">NEW BILL</button>
+		<button id="create_bill" class="button bill">NEW BILL</button>
 
 		<div id="bill_details"></div>
 
-		<table id="Bill_table">
-
-		</table>
+		<div class="container-table100">
+			<div class="wrap-table100">
+				<div class="table">
+					<table id="Bill_table" class="row header bill">
+			
+					</table>
+				</div>
+			</div>
+		</div>
 
 		<div id="bill_final_options"></div>
 	</div>

@@ -36,7 +36,7 @@ $(document).ready(function()
         
         disable_buttons_retailer();
 
-        $('#insert_button2').html('<button id="retailer_done">DONE</button>');
+        $('#insert_button2').html('<button id="retailer_done" class="done button">DONE</button>');
     });
 
     $('#retailer_done').live('click', function()
@@ -161,7 +161,7 @@ $(document).ready(function()
                         $(this).html("<input type='text' id='" + elementId + "_inp' value='" + OriginalContent + "' />");
                 });
 
-                $('#insert_button2').html('<button id="retailer_modify_done">DONE</button>');
+                $('#insert_button2').html('<button id="retailer_modify_done" class="done button">DONE</button>');
             }
         });
 
@@ -196,6 +196,7 @@ $(document).ready(function()
     		success : function(retailer_result)
     		{
     			alert("Data successfully updated - " + retailer_result.retailerId);
+    			//ajaxRetailerGetAll();
     		}
     		
     	});
@@ -205,11 +206,12 @@ $(document).ready(function()
     	            var value = $(this).val();
     	            $(this).replaceWith(value);
     	        });
-    	$('#insert_button').html('');
+    	$('#insert_button2').html('');
     	enable_buttons_retailer();
     	disable_radio_retailer();
 	});
 
+    
     $('#delete_retailer').click(function(){
         alert("Delete Retailer is clicked");
         
@@ -225,7 +227,7 @@ $(document).ready(function()
                 else
                     enable_radio_retailer();
 			}
-		$('#insert_button2').html('<button id="delete_done_retailer">DONE</button>');	
+		$('#insert_button2').html('<button id="delete_done_retailer" class="done button">DONE</button>');	
 		});
 	});
 
@@ -254,22 +256,28 @@ $(document).ready(function()
 	$('#delete_done_retailer').live('click', function(){
         enable_buttons_retailer();
         disable_radio_retailer();
-        $('#insert_button').html('');
+        $('#insert_button2').html('');
       });
 	
 	
     function disable_buttons_retailer()
     {
-        $('#new_retailer').attr('disabled', true);
-        $('#delete_retailer').attr('disabled', true);
-        $('#modify_retailer').attr('disabled', true);
+        $('#new_retailer.button').attr('disabled', true);
+        $('#delete_retailer.button').attr('disabled', true);
+        $('#modify_retailer.button').attr('disabled', true);
+        
+        $('.button').removeClass('enable_button');
+        $('.button').addClass('disable_button');
     }
 
     function enable_buttons_retailer()
     {
-        $('#new_retailer').attr('disabled', false);
-        $('#delete_retailer').attr('disabled', false);
-        $('#modify_retailer').attr('disabled', false);
+        $('#new_retailer.button').attr('disabled', false);
+        $('#delete_retailer.button').attr('disabled', false);
+        $('#modify_retailer.button').attr('disabled', false);
+        
+        $('.button').removeClass('disable_button');
+        $('.button').addClass('enable_button');
     }
 
     function disable_radio_retailer()
