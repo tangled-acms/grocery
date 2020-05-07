@@ -156,5 +156,16 @@
   padding: 12px 20px;
   margin: 8px 0;
   box-sizing: border-box;
-}*/
+}
+
+	input[type='radio'].disable_radio
+	{
+		disabled: true;
+	}
+	
+	input[type='radio'].enable_radio
+	{
+		disabled: false;
+		checked: false;
+	}
 	

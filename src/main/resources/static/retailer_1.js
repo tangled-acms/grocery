@@ -131,8 +131,12 @@ $(document).ready(function()
     						
     						$("#Retailer_table").append(Retailer_row);
     					});
+    			
+    			disable_radio_retailer();
     		}
 		});
+    	
+    	
 		
 	}
 
@@ -141,7 +145,7 @@ $(document).ready(function()
         disable_buttons_retailer();
         enable_radio_retailer();
 
-        $('#Retailer_table input').on('change', function()
+        $('#Retailer_table input').on('click', function()
         {
             var radioValue = $("input[name='select_retailer']:checked").attr('id');
             if(radioValue){
@@ -197,6 +201,7 @@ $(document).ready(function()
     		{
     			alert("Data successfully updated - " + retailer_result.retailerId);
     			//ajaxRetailerGetAll();
+    			$("input[name='select_retailer']").unbind('click');
     		}
     		
     	});
@@ -217,7 +222,7 @@ $(document).ready(function()
         
         disable_buttons_retailer();
 		enable_radio_retailer();
-		$('#Retailer_table').on('change', function()
+		$('#Retailer_table').on('click', function()
 		{
 			var radioValue = $("input[name='select_retailer']:checked").parents('tr').attr('id');
 			if(radioValue){
@@ -248,6 +253,8 @@ $(document).ready(function()
     		{
     			alert("Data successfully deleted - " + retailer_result);
     			$('#' + row_id).remove();
+    			
+    			$("input[name='select_retailer']").unbind('click');
     		}
     		
     	});
@@ -262,9 +269,6 @@ $(document).ready(function()
 	
     function disable_buttons_retailer()
     {
-        $('#new_retailer.button').attr('disabled', true);
-        $('#delete_retailer.button').attr('disabled', true);
-        $('#modify_retailer.button').attr('disabled', true);
         
         $('.button').removeClass('enable_button');
         $('.button').addClass('disable_button');
@@ -272,9 +276,6 @@ $(document).ready(function()
 
     function enable_buttons_retailer()
     {
-        $('#new_retailer.button').attr('disabled', false);
-        $('#delete_retailer.button').attr('disabled', false);
-        $('#modify_retailer.button').attr('disabled', false);
         
         $('.button').removeClass('disable_button');
         $('.button').addClass('enable_button');
@@ -294,6 +295,7 @@ $(document).ready(function()
         $('.select_retailer').each(function()
         {
             $(this).attr('disabled', false);
+            $(this).attr('checked', false);
         });
     }
     

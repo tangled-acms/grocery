@@ -2,7 +2,6 @@ $(document).ready(function()
 {
     var d = document;
     var product_row_count = 0;
-    var retailer_row_count = 0;
     
     ajaxProductGetAll();
     
@@ -122,9 +121,13 @@ $(document).ready(function()
     						
     						$("#Product_table").append(Product_row);
     					});
+    			
+    			disable_radio_product();
     		}
     	
     	});
+    	
+    	
     }
 
     $('#modify_prod').click(function()
@@ -132,7 +135,7 @@ $(document).ready(function()
         disable_buttons_product();
         enable_radio_product();
 
-        $('#Product_table input').on('change', function()
+        $('#Product_table input').on('click', function()
         {
             var radioValue = $("input[name='select_product']:checked").attr('id');
             if(radioValue){
@@ -185,7 +188,8 @@ $(document).ready(function()
     		success : function(result)
     		{
     			alert("Data successfully updated - " + result.productId);
-    			ajaxProductGetAll();
+    			//ajaxProductGetAll();
+    			$("input[name='select_product']").unbind('click');
     		}
     		
     	});
@@ -205,7 +209,7 @@ $(document).ready(function()
         
         disable_buttons_product();
 		enable_radio_product();
-		$('#Product_table').on('change', function()
+		$('#Product_table').on('click', function()
 		{
 			var radioValue = $("input[name='select_product']:checked").parents('tr').attr('id');
 			if(radioValue){
@@ -216,7 +220,7 @@ $(document).ready(function()
                 	}
                     
                 else
-                    enable_product_radio();
+                	enable_radio_product();
 			}
 		$('#insert_button').html('<button id="delete_done" class="done button">DONE</button>');	
 		});
@@ -238,8 +242,9 @@ $(document).ready(function()
     		success : function(result)
     		{
     			alert("Data successfully updated - " + result);
-    			ajaxProductGetAll();
-    			//$('#' + row_id).remove();
+    			$('#' + row_id).remove();
+    			
+    			$("input[name='select_product']").unbind('click');
     		}
     		
     	});
@@ -249,26 +254,17 @@ $(document).ready(function()
         enable_buttons_product();
         disable_radio_product();
         $('#insert_button').html('');
-        $('#insert_button2').html('');
     });
 	
 
     function disable_buttons_product()
     {
-        $('#new_prod').attr('disabled', true);
-        $('#delete_prod').attr('disabled', true);
-        $('#modify_prod').attr('disabled', true);
-        
         $('.button').removeClass('enable_button');
         $('.button').addClass('disable_button');
     }
 
     function enable_buttons_product()
     {
-        $('#new_prod').attr('disabled', false);
-        $('#delete_prod').attr('disabled', false);
-        $('#modify_prod').attr('disabled', false);
-
         $('.button').removeClass('disable_button');
         $('.button').addClass('enable_button');
     }
@@ -280,6 +276,7 @@ $(document).ready(function()
             $(this).attr('disabled', true);
             $(this).attr('checked', false);
         });
+        
     }
 
     function enable_radio_product()
@@ -289,39 +286,7 @@ $(document).ready(function()
             $(this).attr('disabled', false);
             $(this).attr('checked', false);
         });
-    }
 
-    
-    function disable_buttons_retailer()
-    {
-        $('#new_retailer').attr('disabled', true);
-        $('#delete_retailer').attr('disabled', true);
-        $('#modify_retailer').attr('disabled', true);
-    }
-
-    function enable_buttons_retailer()
-    {
-        $('#new_retailer').attr('disabled', false);
-        $('#delete_retailer').attr('disabled', false);
-        $('#modify_retailer').attr('disabled', false);
-    }
-
-    function disable_radio_retailer()
-    {
-        $('.select_retailer').each(function()
-        {
-            $(this).attr('disabled', true);
-            $(this).attr('checked', false);
-        });
-    }
-
-    function enable_radio_retailer()
-    {
-        $('.select_retailer').each(function()
-        {
-            $(this).attr('disabled', false);
-            $(this).attr('checked', false);
-        });
     }
     
 

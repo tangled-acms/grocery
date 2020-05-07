@@ -14,6 +14,7 @@ $(document).ready(function()
     		{
     			//alert(result);
     			display_prod_ret_table(result);
+    			disable_radio_prod_ret();
     			
     		}
     	
@@ -77,17 +78,17 @@ $(document).ready(function()
     	});
     	
     	        enable_buttons_prod_ret();
-    	        //disable_radio_prod_ret();
+    	        disable_radio_prod_ret();
     	        $('#insert_button3').html('');
 	});
 	
 	
-	$('#modify_prod_ret.button').click(function()
+	$('#modify_prod_ret').click(function()
     {
         disable_buttons_prod_ret();
-        //enable_radio_prod_ret();
+        enable_radio_prod_ret();
 
-        $('#Prod_Ret_table input').on('change', function()
+        $('#Prod_Ret_table input').on('click', function()
         {
         	alert("change detected");
             var radioValue = $("input[name='select_prod_ret']:checked").attr('id');
@@ -136,6 +137,8 @@ $(document).ready(function()
     			alert("Data successfully updated - " + retailer_result.retailerId);
     			//ajaxGetAllProductRetailer();
     			
+    			$("input[name='select_prod_ret']").unbind('click');
+    			
     			$('input[type!=radio]').each(function () 
     	    	        {
     	    	            var value = $(this).val();
@@ -148,10 +151,10 @@ $(document).ready(function()
     	$('#insert_button3').html('');
     	
     	enable_buttons_prod_ret();
-    	//disable_radio_prod_ret();
+    	disable_radio_prod_ret();
 	});
 	
-	$("#find_retailer.button").click(function()
+	$("#find_retailer").click(function()
 	{
 		alert("button clicked");
 		$("#insert_button3").html("<input type='text' required placeholder='Enter product ID' id='find_by_pid_inp' class='search_inp'/><br>" +
@@ -164,9 +167,6 @@ $(document).ready(function()
 		var pid = $("#find_by_pid_inp").val();
 		if(pid)
 		{
-			/*var ProdRetData = {
-					productId : pid
-			}*/
 			
 			$.ajax({
 	    		type : "GET",
@@ -236,7 +236,7 @@ $(document).ready(function()
 				});
 	}
 	
-	$("#get_all.button").click(function()
+	$("#get_all").click(function()
 	{
 		ajaxGetAllProductRetailer();
 	});
