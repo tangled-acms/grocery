@@ -34,6 +34,11 @@ public class RetailerController {
 
 	}
 	
+	/**
+	 * Retrieves all the records in retailer table who are active. METHOD = Get.
+	 * 
+	 * @return List of all the records.
+	 */
 	@GetMapping("/retailer/getAllActive")
 	public List<Retailer> getAllActiveRetailerDetails() {
 		return this.retailerService.getAllActiveRetailerDetails();
