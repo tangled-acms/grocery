@@ -93,52 +93,41 @@ $(document).ready(function()
     	$.ajax({
     		type : "GET",
     		contentType : "application/json",
-    		url : "/retailer/getAll",
+    		url : "/retailer/getAllActive",
     		success : function(retailer_result)
     		{
-    			//alert(retailer_result);
-    			
-    			$("#Retailer_table").empty();
-    			$("#Retailer_table").append('<tr id="retailer_tab_heading" class="row header">' + 
-    									'<th></th>' +
-    									'<th>Sl. No</th>' +
-    									'<th>Retailer ID</th>' +
-    									'<th>Retailer Name</th>' + 
-    									'<th>Contact No 1</th>' +
-    									'<th>Contact No 2</th>' +
-    									'<th>Contact No 3</th>' +
-										'<th>Address 1</th>' + 
-										'<th>Address 2</th>' +
-										'<th>Address 3</th>' + 
-										 '</tr>');
-    			
-    			$(retailer_result).each(function(j, retailer)
-    					{
-    						retailer_row_count++;
-    				
-    						var Retailer_row = '<tr id="ret_row_' + (retailer_row_count) + '" class="row">' +
-                            '<th><input type="radio" class="select_retailer" name="select_retailer" id="' + (retailer_row_count) + '"/></th>' +
-                            '<th class="sl_no">' + retailer_row_count + '</th>' +
-                            '<td id="r_id_' + (retailer_row_count) + '">' + retailer.retailerId + '</td>' +
-                            '<td id="r_name' + (retailer_row_count) + '">' + retailer.name + '</td>' +
-                            '<td id="r_cont1' + (retailer_row_count) + '">' + retailer.contact1 + '</td>' +
-                            '<td id="r_cont2' + (retailer_row_count) + '">' + retailer.contact2 + '</td>' +
-                            '<td id="r_cont3' + (retailer_row_count) + '">' + retailer.contact3 + '</td>' +
-                            '<td id="r_addr1' + (retailer_row_count) + '">' + retailer.address1 + '</td>' +
-                            '<td id="r_addr2' + (retailer_row_count) + '">' + retailer.address2 + '</td>' +
-                            '<td id="r_addr3' + (retailer_row_count) + '">' + retailer.address3 + '</td>' +
-                            '</tr>';
-    						
-    						$("#Retailer_table").append(Retailer_row);
-    					});
+    			display_retailer_details(retailer_result)
     			
     			disable_radio_retailer();
+    			$("#get_ret_button").html('<button id="display_all_retailer" class="button">Display inactive retailers </button>');
     		}
 		});
     	
     	
 		
 	}
+    $("#display_all_retailer").live('click', function()
+    	    {
+    	    	$.ajax({
+    	    		type : "GET",
+    	    		contentType : "application/json",
+    	    		url : "/retailer/getAll",
+    	    		success : function(result)
+    	    		{
+    	    			//alert(result);
+    	    			
+    	    			display_retailer_details(result);
+    	    			
+    	    			disable_radio_retailer();
+    	    			$("#get_ret_button").html('<button id="display_retailer" class="button">Display active retailers</button>');
+    	    		}
+    	    	
+    	    	});
+    	    });
+    $("#display_retailer").live('click', function()
+    	    {
+    	ajaxRetailerGetAll();
+    	    });
 
     $('#modify_retailer').click(function()
     {
@@ -298,7 +287,44 @@ $(document).ready(function()
             $(this).attr('checked', false);
         });
     }
-    
+    function display_retailer_details(retailer_result)
+	{
+		//alert(retailer_result);
+		
+		$("#Retailer_table").empty();
+		$("#Retailer_table").append('<tr id="retailer_tab_heading" class="row header">' + 
+								'<th></th>' +
+								'<th>Sl. No</th>' +
+								'<th>Retailer ID</th>' +
+								'<th>Retailer Name</th>' + 
+								'<th>Contact No 1</th>' +
+								'<th>Contact No 2</th>' +
+								'<th>Contact No 3</th>' +
+								'<th>Address 1</th>' + 
+								'<th>Address 2</th>' +
+								'<th>Address 3</th>' + 
+								 '</tr>');
+		
+		$(retailer_result).each(function(j, retailer)
+				{
+					retailer_row_count++;
+			
+					var Retailer_row = '<tr id="ret_row_' + (retailer_row_count) + '" class="row">' +
+                    '<th><input type="radio" class="select_retailer" name="select_retailer" id="' + (retailer_row_count) + '"/></th>' +
+                    '<th class="sl_no">' + retailer_row_count + '</th>' +
+                    '<td id="r_id_' + (retailer_row_count) + '">' + retailer.retailerId + '</td>' +
+                    '<td id="r_name' + (retailer_row_count) + '">' + retailer.name + '</td>' +
+                    '<td id="r_cont1' + (retailer_row_count) + '">' + retailer.contact1 + '</td>' +
+                    '<td id="r_cont2' + (retailer_row_count) + '">' + retailer.contact2 + '</td>' +
+                    '<td id="r_cont3' + (retailer_row_count) + '">' + retailer.contact3 + '</td>' +
+                    '<td id="r_addr1' + (retailer_row_count) + '">' + retailer.address1 + '</td>' +
+                    '<td id="r_addr2' + (retailer_row_count) + '">' + retailer.address2 + '</td>' +
+                    '<td id="r_addr3' + (retailer_row_count) + '">' + retailer.address3 + '</td>' +
+                    '</tr>';
+					
+					$("#Retailer_table").append(Retailer_row);
+				});
+	}
     
     
 });

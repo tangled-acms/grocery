@@ -22,6 +22,7 @@ public class Retailer {
 	private int contact1;
 	private int contact2;
 	private int contact3;
+	private int activestatus;
 	
 	public Retailer() {
 		super();
@@ -92,4 +93,13 @@ public class Retailer {
 	public void setContact3(int contact3) {
 		this.contact3 = contact3;
 	}
+
+	public int getActivestatus() {
+		return activestatus;
+	}
+
+	public void setActivestatus(int activestatus) {
+		this.activestatus = activestatus;
+	}
+	
 }

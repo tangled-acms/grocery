@@ -1,6 +1,8 @@
 package com.acms.services;
 
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +28,14 @@ public class RetailerService {
 		return this.retailerRepository.findAll();
 
 	}
+	
+	public List<Retailer> getAllActiveRetailerDetails() {
+		List<Retailer> retailerList = retailerRepository.findAll();
+		Predicate<Retailer> activeStatus= retailer -> retailer.getActivestatus() == 1;
+		List<Retailer> result = retailerList.stream().filter(activeStatus).collect(Collectors.toList());
+		return result;
 
+	}
 	/**
 	 * Function to retrieve a single record in Retailer Table
 	 * 
@@ -78,7 +87,7 @@ public class RetailerService {
 	}
 
 	/**
-	 * Function to delete an object in Retailer Table
+	 * Function to mark retailer as inactive Retailer Table
 	 * 
 	 * @param retailerId
 	 *            Id of the required record
@@ -88,7 +97,8 @@ public class RetailerService {
 	public String deleteRetailerReecord(String retailerId) throws ResourceNotFoundException {
 		Retailer retailer = this.retailerRepository.findById(retailerId)
 				.orElseThrow(() -> new ResourceNotFoundException("Retailer with ID " + retailerId + " not found!"));
-		this.retailerRepository.delete(retailer);
+		retailer.setActivestatus(0);
+		updateRetailerDetails(retailerId,retailer);
 		return retailerId;
 
 	}

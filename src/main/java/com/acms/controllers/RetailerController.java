@@ -33,6 +33,12 @@ public class RetailerController {
 		return this.retailerService.getAllRetailerDetails();
 
 	}
+	
+	@GetMapping("/retailer/getAllActive")
+	public List<Retailer> getAllActiveRetailerDetails() {
+		return this.retailerService.getAllActiveRetailerDetails();
+
+	}
 
 	/**
 	 * Retrieves one record from retailer table. METHOD = Get.
