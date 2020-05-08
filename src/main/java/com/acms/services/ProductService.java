@@ -1,5 +1,6 @@
 package com.acms.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,25 @@ public class ProductService {
 	 */
 	public List<Product> getAllProductDetails() {
 		return this.productRepository.findAll();
+
+	}
+	
+	/**
+	 * Function to retrieve all records in Product Table
+	 * 
+	 * @return List of all records in Product Table
+	 */
+	public List<Product> getAllAvailableProductDetails() {
+		List<Product> available = new ArrayList<Product>();
+		List<Product> product = productRepository.findAll();
+		
+		for(Product prod : product)
+		{
+			if(prod.getQuantity() > 0)
+				available.add(prod);
+		}
+		System.out.println(available);
+		return available;
 
 	}
 

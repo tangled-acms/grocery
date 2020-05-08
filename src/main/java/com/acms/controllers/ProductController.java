@@ -34,6 +34,18 @@ public class ProductController {
 		return this.productService.getAllProductDetails();
 
 	}
+	
+	/**
+	 * Retrieves all the records in product table. METHOD = Get.
+	 * 
+	 * @param null.
+	 * @return List of objects of Product type.
+	 */
+	@GetMapping("/product/getAllAvailable")
+	public List<Product> getAllAvailableProductDetails() {
+		return this.productService.getAllAvailableProductDetails();
+
+	}
 
 	/**
 	 * Retrieves one record from product table. METHOD = Get.
