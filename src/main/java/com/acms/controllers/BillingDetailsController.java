@@ -35,7 +35,7 @@ public class BillingDetailsController {
 	}
 
 	/**
-	 * Retrieves the records in billingdetails table with the given productId.
+	 * Retrieves the records in billingdetails table with the given billId.
 	 * METHOD = Get.
 	 * 
 	 * @param billId.

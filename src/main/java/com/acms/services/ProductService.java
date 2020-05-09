@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.acms.exceptions.ResourceNotFoundException;
 import com.acms.models.Product;
-import com.acms.models.Retailer;
 import com.acms.repositories.ProductRepository;
 
 @Service
@@ -117,10 +116,9 @@ public class ProductService {
 	 * low in quantity
 	 * 
 	 * @param cron
-	 *            gives notification once at 10:30am every Monday to Friday
-	 * @param fixedDelay
+	 *            gives notification once at 10:30am every Monday to Sunday
 	 */
-	@Scheduled(cron = "0 30 10 * * 1-5")
+	@Scheduled(cron = "0 30 10 * * 1-7")
 	void lowOnProduct() {
 		List<Product> productList = productRepository.findAll();
 		Predicate<Product> quantity = product -> product.getQuantity() < 5;

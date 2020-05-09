@@ -15,6 +15,7 @@ import com.acms.repositories.BillingDetailsRepository;
 @Service
 @Transactional
 public class BillingDetailsService {
+	
 	@Autowired
 	private BillingDetailsRepository billingDetailsRepository;
 
@@ -79,6 +80,13 @@ public class BillingDetailsService {
 		int quantity = product.getQuantity();
 		product.setQuantity((quantity - billingDetails.getQuantity()));
 		productService.updateProductDetails(productId, product);
+		if(AnalyticsService.map.containsKey(productId))
+		{
+			AnalyticsService.map.put(productId,AnalyticsService.map.get(productId)+billingDetails.getQuantity());
+		}
+		else {
+			AnalyticsService.map.put(productId,quantity - billingDetails.getQuantity());
+		}
 		return this.billingDetailsRepository.save(billingDetails);
 	}
 
@@ -116,6 +124,10 @@ public class BillingDetailsService {
 				() -> new ResourceNotFoundException("Bill with ID " + embeddedId.toString() + " not found!"));
 		product.setQuantity(product.getQuantity()+objectToDelete.getQuantity());
 		productService.updateProductDetails(productId, product);
+		if(AnalyticsService.map.containsKey(productId))
+		{
+			AnalyticsService.map.put(productId,AnalyticsService.map.get(productId)-objectToDelete.getQuantity());
+		}
 		this.billingDetailsRepository.delete(objectToDelete);
 		return embeddedId.toString();
 
