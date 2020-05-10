@@ -330,10 +330,12 @@ $(document).ready(function()
     	console.log(product_Statistics);
     	
     	var dataPts = [];
-		
+    	
 		$(product_Statistics).each(function(i, product) 
 		{
-			dataPts.push({label : product.timeStamp, y : product.sold, productId : product.productId});
+			var datenew = new Date((product.timeStamp)*1000);
+			console.log(datenew);
+			dataPts.push({label : datenew.toDateString(), y : product.sold, productId : product.productId});
 		});
 		
 		console.log('Altered result = ');

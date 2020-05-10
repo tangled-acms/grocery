@@ -43,7 +43,6 @@ public class ProductService {
 			if (prod.getQuantity() > 0)
 				available.add(prod);
 		}
-		System.out.println(available);
 		return available;
 
 	}

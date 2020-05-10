@@ -1,7 +1,6 @@
 package com.acms.services;
 
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,8 +29,6 @@ public class AnalyticsService {
 	 * @return List of all records in Analytics Table
 	 */
 	public List<Analytics> getAllAnalyticsRecords() {
-		System.out.println("inside analytics service");
-		System.out.println(Arrays.toString(this.analyticsRepository.findAll().toArray()));
 		return this.analyticsRepository.findAll();
 
 	}
