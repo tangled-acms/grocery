@@ -1,6 +1,7 @@
 package com.acms.services;
 
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,8 @@ public class AnalyticsService {
 	 * @return List of all records in Analytics Table
 	 */
 	public List<Analytics> getAllAnalyticsRecords() {
+		System.out.println("inside analytics service");
+		System.out.println(Arrays.toString(this.analyticsRepository.findAll().toArray()));
 		return this.analyticsRepository.findAll();
 
 	}
@@ -40,7 +43,7 @@ public class AnalyticsService {
 	 *            Id of the product
 	 * @return Object with given ID of all records in Billing Table
 	 */
-	public List<Analytics> getByProductId(int productId) {
+	public List<Analytics> getByProductId(String productId) {
 		List<Analytics> analytics =  this.analyticsRepository.findByAnalyticsEmbeddedIdProductId(productId);
 		return analytics;
 
@@ -59,7 +62,7 @@ public class AnalyticsService {
 			analyticsId.setProductId(i);
 			analyticsId.setTimeStamp(Instant.now().getEpochSecond());
 			
-			Analytics analytics=new Analytics();
+			Analytics analytics = new Analytics();
 			analytics.setAnalyticsEmbeddedId(analyticsId);
 			analytics.setSold(sold);
 			analyticsRepository.save(analytics);

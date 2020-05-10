@@ -10,6 +10,6 @@ import com.acms.models.AnalyticsEmbeddedId;
 
 @Repository
 public interface AnalyticsRepository extends JpaRepository<Analytics, AnalyticsEmbeddedId>{
-	List<Analytics> findByAnalyticsEmbeddedIdProductId(int productId);
+	List<Analytics> findByAnalyticsEmbeddedIdProductId(String productId);
 
 }
