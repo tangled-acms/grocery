@@ -5,7 +5,6 @@ $(document).ready(function()
     
     ajaxProductGetAll();
     
-    customnotify('hi there', 'this is a new notification', 'https://www.google.com/');
     
     $('#new_prod').click(function()
     {

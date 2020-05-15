@@ -7,34 +7,30 @@ $(document).ready(function()
 	if (Notification.permission !== "granted")   
     {  
         Notification.requestPermission();  
+        alert('permission granted');
         
     }  
 	console.log(Notification.permission);
 	
-	function customnotify(title,desc,url)   
-	{  
-	  
-	  if (Notification.permission !== "granted")  
-	  {  
-	   Notification.requestPermission();  
-	  }  
-	  else  
-	  {  
-	   var notification = new Notification(title, {  
-	   
-	   body: desc,  
-	   });  
-	  
-	   /* Remove the notification from Notification Center when clicked.*/  
-	   notification.onclick = function () {  
-	   window.open(url);   
-	   };  
-	  
-	   /* Callback function when the notification is closed. */  
-	   notification.onclose = function () {  
-	   console.log('Notification closed');  
-	   };  
-	  
-	  }  
-	}  
+	$.ajax({
+		type : "GET",
+		contentType : "application/json",
+		url : "/product/getAllRestock",
+		success : function(result)
+		{
+			console.log(result);
+			
+			//var msg = "You are running low on - " + result.productId + " - " + result.name + "\nQuantity = " + result.quantity;
+			
+			var options = {
+				      title: "ProductRestock",
+				      options: {
+				        body: "You are running low on - " + result.productId + " - " + result.name + "\nQuantity = " + result.quantity,
+				        lang: 'pt-BR',
+				      }
+				    };
+
+				$("#easyNotify").easyNotify();
+		}
+	});
 });
