@@ -6,7 +6,6 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.acms.exceptions.ResourceNotFoundException;
@@ -28,6 +27,18 @@ public class ProductService {
 	public List<Product> getAllProductDetails() {
 		return this.productRepository.findAll();
 
+	}
+
+	/**
+	 * Function to retrieve all records which are low in quantity in Product Table
+	 * 
+	 * @return List of all results in Product Table
+	 */
+	public List<Product> getAllProductDetailsToRestock() {
+		List<Product> productList = productRepository.findAll();
+		Predicate<Product> quantity = product -> product.getQuantity() < 3;
+		List<Product> result = productList.stream().filter(quantity).collect(Collectors.toList());
+		return result;
 	}
 
 	/**
@@ -108,20 +119,5 @@ public class ProductService {
 		this.productRepository.delete(product);
 		return productId;
 
-	}
-
-	/**
-	 * Function to send scheduled notification every 24 hours of which products are
-	 * low in quantity
-	 * 
-	 * @param cron
-	 *            gives notification once at 10:30am every Monday to Sunday
-	 */
-	@Scheduled(cron = "0 30 10 * * 1-7")
-	void lowOnProduct() {
-		List<Product> productList = productRepository.findAll();
-		Predicate<Product> quantity = product -> product.getQuantity() < 5;
-		List<Product> result = productList.stream().filter(quantity).collect(Collectors.toList());
-		System.out.print(result.toString());
 	}
 }
