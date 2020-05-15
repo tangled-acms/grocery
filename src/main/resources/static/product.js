@@ -4,8 +4,16 @@ $(document).ready(function()
     var product_row_count = 0;
     
     ajaxProductGetAll();
-    
-    
+    var options = {
+    	      title: "Notification to restock!",
+    	      options: {
+    	        body: "The following products are running low, please restock!",
+    	        icon: "icon.png",
+    	        lang: 'pt-BR',
+    	      }
+    	    };
+
+    	$("#easyNotify").easyNotify(options);
     $('#new_prod').click(function()
     {
         var i, cell, column_count = 0;
