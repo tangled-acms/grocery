@@ -34,7 +34,20 @@ public class ProductController {
 		return this.productService.getAllProductDetails();
 
 	}
-	
+
+	/**
+	 * Retrieves all the records which are low in quantity in product table. 
+	 * METHOD = Get.
+	 * 
+	 * @param null.
+	 * @return List of objects of Product type.
+	 */
+	@GetMapping("/product/getAllRestock")
+	public List<Product> getAllProductDetailsToRestock() {
+		return this.productService.getAllProductDetailsToRestock();
+
+	}
+
 	/**
 	 * Retrieves all the records in product table. METHOD = Get.
 	 * 
@@ -88,7 +101,6 @@ public class ProductController {
 	@PutMapping("/product/update/{id}")
 	public Product updateProductDetails(@PathVariable(value = "id") String productId,
 			@Valid @RequestBody Product productDetails) throws ResourceNotFoundException {
-		System.out.println(productDetails);
 		return this.productService.updateProductDetails(productId, productDetails);
 
 	}
