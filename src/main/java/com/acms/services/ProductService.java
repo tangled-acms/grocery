@@ -35,7 +35,7 @@ public class ProductService {
 	 * @return List of all results in Product Table
 	 */
 	public List<Product> getAllProductDetailsToRestock() {
-		List<Product> productList = productRepository.findAll();
+		List<Product> productList = getAllAvailableProductDetails();
 		Predicate<Product> quantity = product -> product.getQuantity() < 3;
 		List<Product> result = productList.stream().filter(quantity).collect(Collectors.toList());
 		return result;

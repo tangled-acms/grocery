@@ -1,36 +1,34 @@
-/**
- * 
- */
-
 $(document).ready(function()
 {
-	if (Notification.permission !== "granted")   
-    {  
-        Notification.requestPermission();  
-        alert('permission granted');
-        
-    }  
-	console.log(Notification.permission);
-	
-	$.ajax({
+	alert('notification js file');
+  	
+  	$.ajax({
 		type : "GET",
 		contentType : "application/json",
 		url : "/product/getAllRestock",
 		success : function(result)
 		{
-			console.log(result);
+			//alert(result);
 			
-			//var msg = "You are running low on - " + result.productId + " - " + result.name + "\nQuantity = " + result.quantity;
+			var msg = "The following products are running low, please restock!\n";
+			
+			$(result).each(function(i, product)
+			{
+				msg += product.productId + " - " + product.name + " : quantity = " + product.quantity + " \n ";
+			});
+			
+			alert(msg);
 			
 			var options = {
-				      title: "ProductRestock",
-				      options: {
-				        body: "You are running low on - " + result.productId + " - " + result.name + "\nQuantity = " + result.quantity,
-				        lang: 'pt-BR',
-				      }
-				    };
+			  	      title: "Restock Alert",
+			  	      options: {
+			  	        body: msg,
+			  	        icon: "icon.png",
+			  	        lang: 'pt-BR',
+			  	      }
+			  	    };
 
-				$("#easyNotify").easyNotify();
+			  	$("#easyNotify").easyNotify(options);
 		}
-	});
+  	});
 });
