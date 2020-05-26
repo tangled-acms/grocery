@@ -1,19 +1,28 @@
+
+/**
+ * All functions that depend upon the Product Table
+ * Get all data,
+ * Add new Product, 
+ * Modify existing Product,
+ * delete existing Product
+ */
+
 $(document).ready(function()
 {
     var d = document;
     var product_row_count = 0;
     
+    //Display all available products when the web page loads
     ajaxProductGetAll();
-    /*var options = {
-    	      title: "Notification to restock!",
-    	      options: {
-    	        body: "The following products are running low, please restock!",
-    	        icon: "icon.png",
-    	        lang: 'pt-BR',
-    	      }
-    	    };
-
-    	$("#easyNotify").easyNotify(options);*/
+    
+    /**
+     * Called when the user clicks 'Add Product' Button
+     * Adds a new row with editable cells
+     * User enters details of new Product
+     * 
+     * Upon completion, he clicks the 'DONE' button
+     */
+    
     $('#new_prod').click(function()
     {
         var i, cell, column_count = 0;
@@ -43,6 +52,10 @@ $(document).ready(function()
         $('#insert_button').html('<button id="product_add_done" class="done button">DONE</button>');
     });       
 
+    /**
+     * Replaces all editable cells with non editable ones when the 'DONE' button is clicked
+     */
+    
     $('#product_add_done').live('click', function()
     {
         //alert('Done clicked');
@@ -60,6 +73,14 @@ $(document).ready(function()
         disable_radio_product();
         $('#insert_button').html('');
     });
+    
+    /**
+     * Sends a request to ProductController to add the request object to the Product Table
+     * METHOD = POST
+     * 
+     *  @request Object of type Product containing all details of product
+     *  @return Product object successfully added to Table
+     */
     
     function ajaxProductPost()
     {
@@ -89,19 +110,24 @@ $(document).ready(function()
     	});
     }
     
+    /**
+	 * Sends a request to ProductController to retrieve all available products from the Product table
+	 * METHOD = GET
+	 * 
+	 * @param null.
+	 * @return List of objects from Product Table that have have quantity > 0.
+	 */
+    
     function ajaxProductGetAll()
     {
-    	//alert("Get all called!");
+
     	$.ajax({
     		type : "GET",
     		contentType : "application/json",
     		url : "/product/getAllAvailable",
     		success : function(result)
-    		{
-    			//alert(result);
-    			
+    		{    			
     			display_prod_table(result);
-    			
     			disable_radio_product();
     			
     			$("#get_button").html('<button id="display_all_prod" class="button">Display unavailable Products</button>');
@@ -111,6 +137,14 @@ $(document).ready(function()
     	
     }
     
+    /**
+	 * Sends a request to ProductController to retrieve all products from Product Table including those with quantity = 0
+	 * Implemented when 'Display unavailable Products' is clicked
+	 * METHOD = Get.
+	 * 
+	 * @param null.
+	 * @return List of objects from Product Table including out of stock products.
+	 */
     
     $("#display_all_prod").live('click', function()
     {
@@ -120,8 +154,6 @@ $(document).ready(function()
     		url : "/product/getAll",
     		success : function(result)
     		{
-    			//alert(result);
-    			
     			display_prod_table(result);
     			
     			disable_radio_product();
@@ -131,10 +163,23 @@ $(document).ready(function()
     	});
     });
     
+    /**
+	 * Calls the ajaxProductGetAll function to display only available products 
+	 * when the 'Display available Products' button is clicked.
+	 *
+	 */
+    
     $("#display_prod").live('click', function()
     {
     	ajaxProductGetAll();
     });
+    
+    /**
+     * On clicking 'Modify Product' the radio button corresponding to each Product get activated.
+     * On selecting a specific product, the cells change to the editable state.
+     * 
+     *  Upon updating the product details, the user clicks the 'DONE' button to update in the database.
+     */
 
     $('#modify_prod').click(function()
     {
@@ -167,12 +212,20 @@ $(document).ready(function()
 
     });
     
+    /**
+     * Called when a Product's details need to be updated in the Product Table.
+     * Called when 'DONE' is clicked 
+     * 
+     * METHOD = PUT
+     * 
+     * @param Object of Product type containing all product details.
+     * @return updated object details.
+     */
     
-    //ajax call to update existing product row
     $('#product_modify_done').live('click', function()
 	{    	
-    	//alert(product_row_count);
     	
+    	//Object with all product details
     	var ProductData = {
     			productId : $('#p_id_' + product_row_count + '_inp').val(),
     			name : $('#p_name' + product_row_count + '_inp').val(),
@@ -205,10 +258,19 @@ $(document).ready(function()
     	            var value = $(this).val();
     	            $(this).replaceWith(value);
     	        });
+    	//remove 'DONE' button and enable buttons for other operations
     	$('#insert_button').html('');
     	enable_buttons_product();
     	disable_radio_product();
 	});
+    
+    /**
+     * Called when the 'Delete Product' button is clicked.
+     * On click, the radio buttons corresponding to each product get activated.
+     * 
+     * When a product is selected, the user receives a confirmation message.
+     * Based on the user input, appropriate actions are taken
+     */
 
     $('#delete_prod').click(function(){
         alert("Delete Product is clicked");
@@ -231,6 +293,14 @@ $(document).ready(function()
 		$('#insert_button').html('<button id="delete_done" class="done button">DONE</button>');	
 		});
     });
+    
+    /**
+     * Function called when user gives affirmative to delete product
+     * METHOD = DELETE
+     * 
+     * @param Product ID is passed as a part of the url
+     * @return Product ID on successful deletion of Product from database
+     */
     
     function ajaxDeleteProduct(row_id)
     {
@@ -256,142 +326,14 @@ $(document).ready(function()
     	});
     }
     
-    $("#display_graph").click(function()
-    {
-    	
-    	var product_select = "<label>Select Product ID : </label>" + 
-    						"<select id='product_dropdown'>";
-    	
-    	$.ajax({
-    		
-    		type : "GET",
-    		contentType : "application/json",
-    		url : "/analytics/getAll",
-    		success : function(result)
-    		{
-    			console.log(result);
-    			
-    			var data = display_graph(result);
-    			
-    				
-    				console.log('Data for chart = ');
-    				console.log(data.chartData);
-    				
-    				var chart = new CanvasJS.Chart("chartContainer", {
-    					title:{
-        			        text: "Products Sold"              
-        			      },
-        			      data: data.chartData
-    				});
-    				
-    				chart.render();
-    				
-    				create_dropdown(data.dropdownData);    				
-    				
-    				$("#product_dropdown").change(function(){
-    		            var selected_pid = $(this).children("option:selected").val();
-    		            alert("You have selected - " + selected_pid);
-    		            
-    		            display_pid_graph(selected_pid);
-    		        });
-    			
-    		}
-    	});
     
-	
-    });
-    
-    function display_pid_graph(selected_pid)
-    {
-    	//alert('display pid function called');
-    	
-    	$.ajax({
-    		type : "GET",
-    		contentType : "application/json",
-    		url : "/analytics/getById/" + selected_pid,
-    		success : function(result)
-    		{
-    			var data = display_graph(result);
-    			
-    			console.log('Data for chart = ');
-				console.log(data.chartData);
-				
-				var chart = new CanvasJS.Chart("chartContainer", {
-					title:{
-    			        text: "Sales for product - " + selected_pid              
-    			      },
-    			      data: data.chartData
-				});
-				
-				chart.render();
-    		}
-    		
-    	});
-    	
-    }
-    
-    function display_graph(product_Statistics)
-    {
-    	
-    	alert('inside display graph');
-    	
-    	console.log(product_Statistics);
-    	
-    	var dataPts = [];
-    	
-		$(product_Statistics).each(function(i, product) 
-		{
-			var datenew = new Date((product.timeStamp)*1000);
-			console.log(datenew);
-			dataPts.push({label : datenew.toDateString(), y : product.sold, productId : product.productId});
-		});
-		
-		console.log('Altered result = ');
-		console.log( dataPts);
-		
-		var grouped = _.groupBy(dataPts, function(product) {
-			const makeValue = product.productId;
-		    delete product.productId;
-		    return makeValue;
-			});
-
-			console.log('grouped = ');
-			console.log(grouped);
-			
-			var productIdList = Object.keys(grouped);
-			
-			//create_dropdown(productIdList);
-			
-			console.log('Key list = ' + productIdList);
-			
-			var data = [];
-			
-			$(productIdList).each(function(i, product)
-			{
-				data.push({type : "line", name : product, showInLegend: true, dataPoints : grouped[product]});
-				
-			});
-			
-			var respose_data = {chartData : data, dropdownData : productIdList};
-			
-			return respose_data;			
-    }
-    
-    function create_dropdown(productIdList)
-    {
-    	var product_select = "<label>Select Product ID : </label>" + 
-		"<select id='product_dropdown'>";
-    	
-    	$(productIdList).each(function(i, product)
-		{
-			product_select += "<option value='" + product + "'>" + product + "</option>";
-			
-		});
-    	product_select += "</select>";
-    	
-    	$("#graph_input").html(product_select);
-    }
-    
+    /**
+	 * Functions to 
+	 * Enable retailer buttons,
+	 * Disable retailer buttons,
+	 * Enable radio buttons of Retailer Table,
+	 * Disable radio buttons of Retailer Table.
+	 */
 
     function disable_buttons_product()
     {
@@ -424,6 +366,10 @@ $(document).ready(function()
         });
 
     }
+    
+    /**
+     * Function to display array of products as a table 
+     */
     
     function display_prod_table(row_list)
     {

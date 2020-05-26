@@ -1,7 +1,19 @@
+/**
+ * Functions to generate bill for customer upon purchase of products
+ */
+
 $(document).ready(function()
 {
 	var bill_row_count = 0;
 	var total = 0;
+	
+	/**
+	 * Called when user clicks 'New Bill' button.
+	 * Creates edit text fields for new Bill ID, Product ID and quantity
+	 * 
+	 * When new bill ID is added user needs to click 'OK' button
+	 * Click 'Add Item' for every new item and quantity added to bill
+	 */
 	
     $("#create_bill").click(function()
     {
@@ -12,6 +24,14 @@ $(document).ready(function()
                                 "<button id='add_item' class='button bill'>ADD ITEM</button><br>" +
                                 "<button id='make_bill' class='button done'>generate bill</button><br><br>");
     });
+    
+    /**
+     * Called when the user adds a new product to the bill.
+     * METHOD = POST
+     * 
+     * @param Object of Billing type containing partial information - (Product ID, quantity, Bill ID)
+     * @returns Object that was successfully added to BillingDetails table. 
+     */
     
     $("#add_item").live('click', function()
     {
@@ -44,6 +64,15 @@ $(document).ready(function()
     	});
     });
     
+    /**
+     * Called when the user generates new bill by clicking the 'OK' button.
+     * Adds a new row to the Billing table with new Bill ID.
+     * 	METHOD = POST
+     * 
+     * @param Object containing bill ID
+     * @returns Object that was successfully added to Billings table.
+     */
+    
     $("#add_bill").live('click', function()
     {
     	var billid = $("#bill_id").val();
@@ -63,12 +92,23 @@ $(document).ready(function()
     		dataType : "json",
     		success : function(result)
     		{
-    			alert("Data successfully added - " + result);
+    			alert("New Bill Created - " + result);
     		}
     		
     	});
     	
     });
+    
+    /**
+     * Called when the user has finished adding all products to the bill and clicks 'Make Bill' button.
+     * METHOD = GET
+     * 
+     * @param Bill ID as a part of the url
+     * @returns array of objects containing information of products of requested Bill ID
+     * 
+     * Displays the bill in a tabular form with product ID, quantity and Cost
+     * Function also calculates sub total of bill.
+     */
     
     $("#make_bill").live('click', function()
     {
@@ -117,6 +157,15 @@ $(document).ready(function()
     		
     });
     
+    /**
+     * Once the bill is finalized, the user selects the payment mode - Cash or Card
+     * The payment mode and sub total are updated to the Billing table.
+     * METHOD = PUT
+     * 
+     * @param Object containing partial information of given bill ID 
+     * @returns Object containing details that was successfully updated to Billing table.
+     */
+    
     $("#make_payment").live('click', function()
     {
     	alert("payment button clicked");
@@ -147,43 +196,51 @@ $(document).ready(function()
     	
     });
     
+    /**
+     * Sends request to BillingDetailsController to delete specific item from a given BillID
+     * METHOD = DELETE
+     * 
+     * @param Object containing bill ID and product ID that needs to be deleted.
+     * @returns Object containing details of object deleted from BillingDetails table.
+     */
+    
     $("#delete_bill_item").live('click', function()
     {
     	$('#Bill_table').on('change', function()
-    			{
-    				var radioValue = $("input[name='select_bill_item']:checked").attr('id');
-    				if(radioValue){
-    					var delete_confirm = confirm('Are you sure you want to delete this item from bill?' + radioValue);
-    	                if(delete_confirm == true)
-    	                	{
-    	                		console.log("deleting");
-    	        
-    	                    	var Id = $('#b_pid_' + radioValue).text();
-    	                    	alert(Id);
-    	                    	
-    	                    	var BillDetails = {
-    	                    			billId : $("#bill_id").val(),
-    	                    			productId : Id
-    	                    	}
-    	                    	
-    	                    	console.log(BillDetails);
-    	                    	
-    	                    	$.ajax({
-    	                    		
-    	                    		type : "DELETE",
-    	                    		contentType : "application/json",
-    	                    		url : "/billingdetails/delete",
-    	                    		data: JSON.stringify(BillDetails),
-    	                    		dataType : "json",
-    	                    		success : function(result)
-    	                    		{
-    	                    			alert("Data deleted from bill - " + result);
-    	                    			$('#row_' + radioValue).remove();
-    	                    		}
-    	                    		
-    	                    	});
-    	                	}
-    				}
-    			});
+		{
+			var radioValue = $("input[name='select_bill_item']:checked").attr('id');
+			if(radioValue){
+				var delete_confirm = confirm('Are you sure you want to delete this item from bill?' + radioValue);
+                if(delete_confirm == true)
+            	{
+            		console.log("deleting");
+    
+                	var Id = $('#b_pid_' + radioValue).text();
+                	alert(Id);
+                	
+                	var BillDetails = {
+                			billId : $("#bill_id").val(),
+                			productId : Id
+                	}
+                    	
+                	console.log(BillDetails);
+                	
+                	$.ajax({
+                		
+                		type : "DELETE",
+                		contentType : "application/json",
+                		url : "/billingdetails/delete",
+                		data: JSON.stringify(BillDetails),
+                		dataType : "json",
+                		success : function(result)
+                		{
+                			alert("Data deleted from bill - " + result);
+                			$('#row_' + radioValue).remove();
+                		}
+                    		
+                    });
+                }
+			}
+		});
     });
 });
