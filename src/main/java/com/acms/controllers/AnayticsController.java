@@ -16,7 +16,7 @@ import com.acms.services.AnalyticsService;
 public class AnayticsController {
 	@Autowired
 	private AnalyticsService analyticsService;
-	
+
 	/**
 	 * Retrieves all the records in Analytics table. METHOD = Get.
 	 * 
@@ -25,14 +25,14 @@ public class AnayticsController {
 	 */
 	@GetMapping("/analytics/getAll")
 	public List<Analytics> getAllAnalytics() {
-		//System.out.println(this.analyticsService.getAllAnalyticsRecords());
+		// System.out.println(this.analyticsService.getAllAnalyticsRecords());
 		return this.analyticsService.getAllAnalyticsRecords();
 
 	}
-	
+
 	/**
-	 * Retrieves the records in Analytics table with the given productId.
-	 * METHOD = Get.
+	 * Retrieves the records in Analytics table with the given productId. METHOD =
+	 * Get.
 	 * 
 	 * @param productId.
 	 * @return List of all the records which contain that productId.
@@ -40,11 +40,12 @@ public class AnayticsController {
 	 *             if given Id does not exist
 	 */
 	@GetMapping("/analytics/getById/{id}")
-	public List<Analytics> getByProductId(@PathVariable(value = "id") String productId) throws ResourceNotFoundException {
+	public List<Analytics> getByProductId(@PathVariable(value = "id") String productId)
+			throws ResourceNotFoundException {
 		return this.analyticsService.getByProductId(productId);
 
 	}
-	
+
 	/**
 	 * Saves data in the Analytics table. METHOD = Post.
 	 * 
@@ -57,4 +58,13 @@ public class AnayticsController {
 		return this.analyticsService.postDataToAnalytics();
 	}
 
+	/**
+	 * Displays python output data in the front end. METHOD = Get.
+	 * 
+	 * @return String of output.
+	 */
+	@GetMapping("/analytics/getPyOutput")
+	public String pythonScriptOutput() {
+		return this.analyticsService.pythonScriptOutput();
+	}
 }

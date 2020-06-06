@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
 @Entity
-@Table(name = "productdetails")
+@Table(name = "productretailer")
 public class ProductRetailer {
 	@EmbeddedId
 	@JsonUnwrapped
