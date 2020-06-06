@@ -105,7 +105,8 @@ $(document).ready(function()
     	            $(this).replaceWith(value);
     	        });
     			
-    			//ajaxProductGetAll();
+    			ajaxProductGetAll();
+    			alert("product get called");
     			
     	        enable_buttons_prod_ret();
     	        disable_radio_prod_ret();
