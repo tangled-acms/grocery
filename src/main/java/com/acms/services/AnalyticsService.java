@@ -95,7 +95,7 @@ public class AnalyticsService {
 		Process process = null;
 		try {
 			process = Runtime.getRuntime()
-					.exec("python C:\\Users\\madhu\\PycharmProjects\\SentimentAnalysiss\\example.py 1 2");
+					.exec("python G:\\DSC\\3rd_year\\6th_sem\\ACMS_Tangled\\example.py 1 2");
 		} catch (Exception e1) {
 			System.out.println("Exception Raised" + e1.toString());
 		}

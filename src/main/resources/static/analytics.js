@@ -101,7 +101,7 @@ $(document).ready(function()
     function display_graph(product_Statistics)
     {
     	
-    	alert('inside display graph');
+    	//alert('inside display graph');
     	
     	console.log(product_Statistics);
     	
@@ -162,4 +162,24 @@ $(document).ready(function()
     	
     	$("#graph_input").html(product_select);
     }
+    
+    /**
+     * Function to display the top 3 sold products in the last week
+     * Function called when user clicks the 'show sales' button
+     */
+    
+    $('#display_top_sales').click(function()
+    {
+    	$.ajax({
+    		type : "GET",
+    		contentType : "application/json",
+    		url : "/analytics/getPyOutput",
+    		success : function(result)
+    		{
+    			//alert(result);
+    			$("#sales_msg").html(result);
+    			$("#sales_msg").css("border", "5px solid black");
+    		}
+    	});
+    });
 });

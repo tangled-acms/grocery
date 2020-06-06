@@ -106,7 +106,7 @@ $(document).ready(function()
     	        });
     			
     			ajaxProductGetAll();
-    			alert("product get called");
+    			//alert("product get called");
     			
     	        enable_buttons_prod_ret();
     	        disable_radio_prod_ret();
@@ -352,5 +352,58 @@ $(document).ready(function()
             $(this).attr('disabled', false);
             $(this).attr('checked', false);
         });
+    }
+    
+    function display_prod_table(row_list)
+    {
+    	var product_row_count = 0;
+		$("#Product_table").empty();
+		$("#Product_table").append('<tr id="prod_tab_heading" class="row header">' + 
+								'<th></th>' +
+								'<th>Sl. No</th>' +
+								'<th>Product ID</th>' +
+								'<th>Product Name</th>' + 
+								'<th>Description</th>' +
+								'<th>Quantity Available</th>' +
+								'<th>Cost per unit</th>' +
+    							'<th>Promotion(%)</th>' +
+								'</tr>');
+		
+		$(row_list).each(function(i, product)
+				{
+					product_row_count++;
+			
+					var Product_row = '<tr id="row_' + (product_row_count) + '" class="row">' +
+                    '<th><input type="radio" class="select_product" name="select_product" id="' + (product_row_count) + '"/></th>' +
+                    '<th class="sl_no">' + product_row_count + '</th>' +
+                    '<td id="p_id_' + (product_row_count) + '">' + product.productId + '</td>' +
+                    '<td id="p_name' + (product_row_count) + '">' + product.name + '</td>' +
+                    '<td id="p_descrp' + (product_row_count) + '">' + product.description + '</td>' +
+                    '<td id="qty' + (product_row_count) + '">' + product.quantity + '</td>' +
+                    '<td id="cost' + (product_row_count) + '">' + product.mrp + '</td>' +
+                    '<td id="prom' + (product_row_count) + '">' + product.promotion + '</td>' +
+                    '</tr>';
+					
+					$("#Product_table").append(Product_row);
+				});
+    }
+    
+    function ajaxProductGetAll()
+    {
+
+    	$.ajax({
+    		type : "GET",
+    		contentType : "application/json",
+    		url : "/product/getAllAvailable",
+    		success : function(result)
+    		{    			
+    			display_prod_table(result);
+    			disable_radio_product();
+    			
+    			$("#get_button").html('<button id="display_all_prod" class="button">Display unavailable Products</button>');
+    		}
+    	
+    	});
+    	
     }
 });
